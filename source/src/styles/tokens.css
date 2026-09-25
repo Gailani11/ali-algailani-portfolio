@@ -1,0 +1,48 @@
+/*
+ * Design tokens — derived from the portfolio PDF's locked system:
+ * near-black cover ink, white pages, warm off-white cards, graphite labels,
+ * Poppins for Latin and IBM Plex Sans Arabic for Arabic, wide-tracked caps,
+ * hairline rules and corner ticks. Colour beyond this neutral set belongs to the
+ * clients: each project brings its own accent (--accent) from its palette.
+ *
+ * The site deliberately commits to one visual world (ink and paper spreads, like the
+ * book), so it does not switch palettes with the OS theme; every surface paints its
+ * own background and text colour explicitly.
+ */
+@property --breath {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 1;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* neutrals — the ink is the PDF cover colour, the bone is its card colour */
+  --ink: #111113;
+  --ink-2: #0c0c0e;
+  --ink-3: #1b1b1e;
+  --paper: #ffffff;
+  --bone: #f5f4f1;
+  --stone: #e9e6e0;
+  --graphite: #8d8c92;
+  --slate: #57565c;
+  --mist: #a9a8ad;
+  --line-paper: rgba(17, 17, 19, 0.1);
+  --line-ink: rgba(255, 255, 255, 0.12);
+  --accent: #111113;
+
+  /* type */
+  --f-lat: 'Poppins', 'IBM Plex Sans Arabic', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --f-ar: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, sans-serif;
+  --track: 0.32em;
+
+  /* motion */
+  --ease: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out: cubic-bezier(0.16, 0.84, 0.24, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* layout */
+  --gutter: clamp(18px, 4.2vw, 72px);
+  --nav-h: 76px;
+}

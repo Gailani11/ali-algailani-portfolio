@@ -1,0 +1,433 @@
+/* ---------- reset ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+  background: var(--ink);
+}
+html.menu-open {
+  overflow: hidden;
+}
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--f-lat);
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: inherit;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+h1,
+h2,
+h3,
+p,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+[hidden] {
+  display: none !important;
+}
+::selection {
+  background: #e9e6e0;
+  color: #111113;
+}
+#main {
+  outline: none;
+  /* nothing inside the page may push it sideways (3D tilts, reels, rails) — clip keeps sticky working */
+  overflow-x: clip;
+}
+html.has-cursor,
+html.has-cursor * {
+  cursor: none !important;
+}
+
+:focus-visible {
+  outline: 1.5px solid currentColor;
+  outline-offset: 5px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 200;
+  padding: 12px 18px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  transform: translateY(-200%);
+}
+.skip:focus {
+  transform: none;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- type primitives ---------- */
+.ar {
+  font-family: var(--f-ar);
+  letter-spacing: 0;
+  unicode-bidi: isolate;
+  font-synthesis: none;
+}
+/* Arabic never takes letter-spacing (it breaks the joins) and never uppercases */
+:lang(ar):not(.num) {
+  letter-spacing: 0 !important;
+}
+/* Latin runs inside Arabic pages keep their own direction and punctuation */
+[lang='en'] {
+  direction: ltr;
+  unicode-bidi: isolate;
+}
+.num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  font-variant-numeric: tabular-nums;
+}
+/* Arabic subtitles under Latin names follow the reading edge of the column */
+main[dir='ltr'] :is(.idp__ar, .ux__ar, .pub__ar, .case__ar, .next__ar, .lab__now-ar, .screens__ar) {
+  text-align: left;
+}
+main[dir='rtl'] :is(.idp__ar, .ux__ar, .pub__ar, .case__ar, .next__ar, .lab__now-ar, .screens__ar) {
+  text-align: right;
+}
+/* Latin project names and numerals inside Arabic pages sit on the Arabic reading edge */
+main[dir='rtl'] :is(.pub__name, .ux__name, .case__title, .card__name, .idp__name, .next__name > [lang='en']) {
+  text-align: right;
+}
+main[dir='rtl'] .num:not([dir='ltr'] .num) {
+  text-align: right;
+}
+/* Arabic interface copy: the Arabic face, a touch larger, with room for dots below */
+main:lang(ar) .eyebrow:lang(ar),
+main:lang(ar) .numbering__label,
+main:lang(ar) :is(.idp__meta, .ux__dl, .facts) dt {
+  font-family: var(--f-ar);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  text-transform: none;
+}
+main:lang(ar) :is(.idp__desc, .ux__desc, .pub__desc, .lab__note, .screens__note, .case__block-note, .card__sub) {
+  font-family: var(--f-ar);
+  line-height: 1.9;
+}
+main:lang(ar) :is(.idp__cta, .ux__foot .ulink, .contents__all, .strip__open) {
+  font-family: var(--f-ar);
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+main:lang(ar) :is(.pub__meta, .piece__format, .brand__meta, .logos__sector, .card__kicker, .contents__count, .chapter__count, .idp__meta dd, .ux__dl dd, .case__close-meta, .next__kicker, .case__kicker, .case__crumbs, .footer, .dl__label, .dl__meta, .cinfo dt, .finale__qr .eyebrow) {
+  font-family: var(--f-ar);
+  text-transform: none;
+}
+main:lang(ar) :is(.pub__meta, .piece__format, .brand__meta, .logos__sector, .card__kicker, .contents__count, .chapter__count, .case__close-meta, .footer, .cinfo dt, .dl__meta, .finale__qr .eyebrow) {
+  font-size: 12.5px;
+}
+main:lang(ar) :is(.case__kicker, .next__kicker, .case__crumbs, .dl__label) {
+  font-size: 14px;
+}
+.eyebrow {
+  font-family: var(--f-lat);
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--graphite);
+}
+.numbering {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: var(--track);
+  text-transform: uppercase;
+  color: var(--graphite);
+  font-variant-numeric: tabular-nums;
+}
+.numbering__dash {
+  width: 30px;
+  height: 1px;
+  background: currentColor;
+}
+.numbering__n {
+  color: var(--accent);
+}
+
+/* underline link: hidden at rest, wipes in on hover (nav); .ulink in content keeps a resting line */
+.ulink {
+  position: relative;
+  display: inline-block;
+  padding-bottom: 4px;
+}
+.ulink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(1);
+  transform-origin: left;
+  opacity: 0.45;
+}
+.ulink:hover::after {
+  animation: uwipe 0.9s var(--ease);
+  opacity: 1;
+}
+[dir='rtl'] .ulink::after {
+  transform-origin: right;
+}
+.nav .ulink::after {
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.6s var(--ease);
+  opacity: 1;
+}
+.nav .ulink:hover::after {
+  animation: none;
+  transform: scaleX(1);
+  transform-origin: left;
+}
+@keyframes uwipe {
+  0% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  45% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  46% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+/* ---------- reveal system (only when JS runs) ---------- */
+.js [data-rv] {
+  opacity: 0;
+  transform: translate3d(0, 44px, 0);
+  transition:
+    opacity 1.1s var(--ease-out) var(--d, 0ms),
+    transform 1.3s var(--ease-out) var(--d, 0ms);
+}
+.js [data-rv].is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* line masks */
+.mline {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+}
+.mline__in {
+  display: block;
+}
+/* Arabic letters carry dots and marks well below and above the line: widen the mask */
+.mline:lang(ar) {
+  padding: 0.18em 0 0.42em;
+  margin: -0.18em 0 -0.42em;
+}
+.js .mlines[data-rv] {
+  opacity: 1;
+  transform: none;
+}
+.js .mlines[data-rv] .mline__in {
+  transform: translate3d(0, 108%, 0);
+  transition: transform 1.25s var(--ease) var(--d, 0ms);
+}
+.js .mlines[data-rv].is-in .mline__in {
+  transform: none;
+}
+
+/* masked image reveal */
+.imgr {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ar, 1.6);
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 10px;
+}
+.imgr img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 1.8s var(--ease-out) var(--d, 0ms);
+}
+.imgr--cover img {
+  object-fit: cover;
+}
+button.imgr img {
+  transition:
+    transform 1.8s var(--ease-out) var(--d, 0ms),
+    scale 0.9s var(--ease);
+}
+button.imgr:hover img {
+  scale: 1.035;
+}
+.imgr__mask {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: inherit;
+}
+.js .imgr[data-rv] {
+  opacity: 1;
+  transform: none;
+}
+.js .imgr[data-rv] .imgr__mask {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.35s var(--ease) var(--d, 0ms);
+}
+.js .imgr--left[data-rv] .imgr__mask {
+  clip-path: inset(0 100% 0 0);
+}
+.js .imgr--right[data-rv] .imgr__mask {
+  clip-path: inset(0 0 0 100%);
+}
+.js .imgr--top[data-rv] .imgr__mask {
+  clip-path: inset(0 0 100% 0);
+}
+.js .imgr[data-rv] img {
+  transform: scale(1.16);
+}
+.js .imgr[data-rv].is-in .imgr__mask {
+  clip-path: inset(0 0 0 0);
+}
+.js .imgr[data-rv].is-in img {
+  transform: none;
+}
+
+/* magnetic button shell */
+.mbtn {
+  display: inline-flex;
+  will-change: transform;
+}
+.mbtn__inner {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}
+
+/* palette chips (identity reel) */
+.palette {
+  display: flex;
+  height: 38px;
+  max-width: 380px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 26px;
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 19, 0.06);
+}
+.palette__chip {
+  position: relative;
+  flex: 1;
+  background: var(--c);
+  transition: flex 0.7s var(--ease);
+}
+.palette__chip:hover {
+  flex: 2.4;
+}
+.palette__chip i {
+  position: absolute;
+  left: 8px;
+  bottom: 6px;
+  font-style: normal;
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  color: #fff;
+  mix-blend-mode: difference;
+  opacity: 0;
+  transition: opacity 0.4s;
+  white-space: nowrap;
+}
+.palette__chip:hover i {
+  opacity: 1;
+}
+
+/* touch: a press answers with a small give, in place of hover and magnetism */
+@media (hover: none) {
+  :is(button, a):active {
+    transition: scale 0.25s var(--ease);
+    scale: 0.97;
+  }
+}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .js [data-rv],
+  .js .imgr[data-rv] .imgr__mask,
+  .js .welcome__ar,
+  .js .mlines[data-rv] .mline__in {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
