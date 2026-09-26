@@ -1,8 +1,8 @@
 import numpy as np, json
 from PIL import Image, ImageFilter
 from scipy import ndimage
-OUT='site/public/assets'
-man=json.load(open('manifest.json'))
+OUT='public/assets'
+man=json.load(open('tools/manifest.json'))
 def save(im,name,maxw,q=86):
     if im.width>maxw: im=im.resize((maxw,round(im.height*maxw/im.width)),Image.LANCZOS)
     im.save(f'{OUT}/{name}.webp','WEBP',quality=q,method=6)
@@ -11,7 +11,7 @@ def save(im,name,maxw,q=86):
 # ---- social phones: full device with transparent background
 pages={45:'kopii',46:'memories',47:'safanova',48:'ghamsa',49:'bits-arabia',50:'careinn'}
 for p,slug in pages.items():
-    im=Image.open(f'full/p{p:02d}.jpg').convert('RGB'); a=np.asarray(im).astype(int)
+    im=Image.open(f'tools/pages/p{p:02d}.jpg').convert('RGB'); a=np.asarray(im).astype(int)
     x0,y0,x1,y1=200,350,1650,2850
     sub=a[y0:y1,x0:x1]; L=sub.mean(2)
     dark=L<70
@@ -36,8 +36,8 @@ for p,slug in pages.items():
 
 # ---- UI hero compositions: the full panel + the phones that overflow it, with air
 for p,slug in [(25,'fully-charged'),(28,'trackulizer')]:
-    im=Image.open(f'full/p{p:02d}.jpg').convert('RGB'); W,H=im.size
+    im=Image.open(f'tools/pages/p{p:02d}.jpg').convert('RGB'); W,H=im.size
     c=im.crop((int(0.382*W),int(0.158*H),int(0.948*W),int(0.918*H)))
     save(c,f'ui/{slug}/hero',maxw=1800,q=86)
     print(slug,c.size)
-json.dump(man,open('manifest.json','w'),indent=1)
+json.dump(man,open('tools/manifest.json','w'),indent=1)

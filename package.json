@@ -1,8 +1,8 @@
 {
   "name": "ali-algailani-portfolio",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
-  "description": "Ali Algailani \u2014 Senior Graphic & UI/UX Designer. Portfolio website built from the 2026 portfolio PDF.",
+  "description": "Ali Al Gailani — Senior Graphic & UI/UX Designer. Portfolio 2026 website (Arabic / English).",
   "type": "module",
   "scripts": {
     "build": "bun run build.ts",
@@ -10,8 +10,8 @@
     "typecheck": "tsc -p ."
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "19.2.6",
+    "react-dom": "19.2.6"
   },
   "devDependencies": {
     "typescript": "^5.6.0"

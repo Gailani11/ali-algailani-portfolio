@@ -1,9 +1,9 @@
 import numpy as np, json, os
 from PIL import Image
 from xycut import boxes as xyboxes
-OUT='site/public/assets'
+OUT='public/assets'
 man={}
-def I(p): return Image.open(f'full/p{p:02d}.jpg').convert('RGB')
+def I(p): return Image.open(f'tools/pages/p{p:02d}.jpg').convert('RGB')
 def save(im,name,maxw=1600,q=80):
     path=f'{OUT}/{name}.webp'; os.makedirs(os.path.dirname(path),exist_ok=True)
     if im.width>maxw: im=im.resize((maxw,round(im.height*maxw/im.width)),Image.LANCZOS)
@@ -76,14 +76,7 @@ man['_cardbg']=cards
 # ---- 3. UI
 for slug,hero,pages in [('fully-charged',25,(26,27)),('trackulizer',28,(29,30))]:
     im=I(hero); save(frac(im,(0.395,0.17,0.945,0.855)),f'ui/{slug}/hero',maxw=1760,q=85)
-    n=0
-    for p in pages:
-        im=I(p); a=np.asarray(im).astype(int)
-        for x0 in (178,666,1154,1642,2130,2618):
-            col=a[470:1440,x0:x0+404]; m=(255-col).max(2)>6
-            rowsnz=np.where(m.any(1))[0]
-            y0=470+rowsnz.min(); y1=470+rowsnz.max()
-            n+=1; save(im.crop((x0,y0,x0+404,y1)),f'ui/{slug}/s{n:02d}',maxw=404,q=90)
+    # the 24 app screens (s01–s12) are cut by tools/ui_screens.py, square to each screen
 
 # ---- 4. Company profiles
 cps=['bits-arabia','bits-wellness','bits-hospitality','smart-channels','careinn','nahr']
@@ -123,5 +116,5 @@ im=I(51); W,H=im.size
 reg=(int(0.03*W),int(0.65*H),int(0.18*W),int(0.9*H)); a=np.asarray(im.crop(reg)).astype(int)
 m=a.min(2)>200; ys,xs=np.where(m)
 save(im.crop((reg[0]+xs.min(),reg[1]+ys.min(),reg[0]+xs.max()+1,reg[1]+ys.max()+1)),'misc/qr',maxw=600,q=95)
-json.dump(man,open('manifest.json','w'),indent=1)
+json.dump(man,open('tools/manifest.json','w'),indent=1)
 print(len([k for k in man if not k.startswith('_') and not k.endswith('_tiles')]))

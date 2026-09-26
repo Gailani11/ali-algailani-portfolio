@@ -31,7 +31,7 @@ def cut(white, x0,y0,x1,y1, depth=0, minw=12, thr=0.97, minsize=120):
             return res
     return [(x0,y0,x1,y1)]
 def boxes(p, region=(0.04,0.15,0.96,0.925), lvl=205, minw=8, thr=0.95, minsize=120):
-    im=Image.open(f'full/p{p:02d}.jpg').convert('RGB'); W,H=im.size
+    im=Image.open(f'tools/pages/p{p:02d}.jpg').convert('RGB'); W,H=im.size
     a=np.asarray(im).astype(int)
     L=a.mean(2); S=a.max(2)-a.min(2)
     white=((L>=lvl)&(S<8)).astype(float)
@@ -40,7 +40,7 @@ def boxes(p, region=(0.04,0.15,0.96,0.925), lvl=205, minw=8, thr=0.95, minsize=1
 if __name__=='__main__':
     for p in map(int,sys.argv[1:]):
         b=boxes(p)
-        im=Image.open(f'full/p{p:02d}.jpg'); d=ImageDraw.Draw(im)
+        im=Image.open(f'tools/pages/p{p:02d}.jpg'); d=ImageDraw.Draw(im)
         for i,bb in enumerate(b): d.rectangle(bb,outline='red',width=8); d.text((bb[0]+10,bb[1]+10),str(i),fill='red')
         im.resize((1200,int(1200*im.height/im.width))).save(f'crops/seg{p}.jpg')
         print(p,len(b),b)
