@@ -77,12 +77,9 @@ transforms / clip-path only; the custom cursor is disabled on touch devices.
 ## Note on assets in this package
 
 To keep the download small, the images and the PDF are included once, inside `../website/`.
-Before building from source, copy them back:
-
-```bash
-cp -r ../website/assets public/assets
-cp ../website/Ali-Algailani-Portfolio-2026.pdf public/
-```
+`build.ts` copies `../website/assets` into `dist/assets` (and the PDF into `dist/`) on every
+build, so `bun run build` works from this folder as-is — locally or on Vercel with
+Root Directory `source`. The build stops with an error if no assets are found.
 
 ## Single-file copy for sharing
 
