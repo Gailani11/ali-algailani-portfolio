@@ -391,8 +391,8 @@ export const PRINTS: PrintPiece[] = [
     cover: 'pr/amals-kitchen/01',
   },
   {
-    id: 'ghams', kind: 'print', index: 4, name: 'Ghams', ar: 'غمس', sector: 'Food', sectorAr: 'مطاعم', format: 'Menu', formatAr: 'قائمة طعام',
-    year: '2026', accent: '#E9A91F', pages: [42], images: ['pr/ghams/01', 'pr/ghams/02', 'pr/ghams/03'], cover: 'pr/ghams/01',
+    id: 'ghamsa', kind: 'print', index: 4, name: 'Ghamsa', ar: 'غمسة', sector: 'Food', sectorAr: 'مطاعم', format: 'Menu', formatAr: 'قائمة طعام',
+    year: '2026', accent: '#E9A91F', pages: [42], images: ['pr/ghamsa/01', 'pr/ghamsa/02', 'pr/ghamsa/03'], cover: 'pr/ghamsa/01',
   },
   {
     id: 'kopii-leaflet', kind: 'print', index: 5, name: 'KOPII', sector: 'Coffee', sectorAr: 'قهوة', format: 'Fold-out leaflet · 7 panels', formatAr: 'مطوية · 7 أقسام',
@@ -405,9 +405,9 @@ export const SOCIALS: SocialSet[] = [
   { id: 'kopii', name: 'KOPII', sector: 'Coffee', sectorAr: 'قهوة', accent: '#1F4D45', pages: [45], n: 6 },
   { id: 'memories', name: 'Memories', sector: 'Food', sectorAr: 'أغذية', accent: '#B3261E', pages: [46], n: 3 },
   { id: 'safanova', name: 'Safanova', sector: 'Skincare', sectorAr: 'عناية بالبشرة', accent: '#E6457A', pages: [47], n: 3 },
-  { id: 'ghams', name: 'Ghams', ar: 'غمس', sector: 'Food', sectorAr: 'مطاعم', accent: '#C88A2B', pages: [48], n: 3 },
+  { id: 'ghamsa', name: 'Ghamsa', ar: 'غمسة', sector: 'Food', sectorAr: 'مطاعم', accent: '#C88A2B', pages: [48], n: 3 },
   { id: 'bits-arabia', name: 'BITS Arabia', ar: 'بيتس أرابيا', sector: 'Systems Integration', sectorAr: 'تكامل الأنظمة', accent: '#D71F2B', pages: [49], n: 8 },
-  { id: 'careinn', name: 'CareInn', ar: 'كير إن', sector: 'Health-tech', sectorAr: 'تقنيات صحية', accent: '#1C6FB5', pages: [50], n: 6 },
+  { id: 'careinn', name: 'CareInn', ar: 'كير إن', sector: 'Health-tech', sectorAr: 'تقنيات صحية', accent: '#1C6FB5', pages: [50], n: 8 },
 ].map((s, i) => ({
   id: s.id,
   kind: 'social' as const,

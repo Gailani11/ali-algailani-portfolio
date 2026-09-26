@@ -9,7 +9,7 @@ def save(im,name,maxw,q=86):
     man[name]={'w':im.width,'h':im.height}; return im
 
 # ---- social phones: full device with transparent background
-pages={45:'kopii',46:'memories',47:'safanova',48:'ghams',49:'bits-arabia',50:'careinn'}
+pages={45:'kopii',46:'memories',47:'safanova',48:'ghamsa',49:'bits-arabia',50:'careinn'}
 for p,slug in pages.items():
     im=Image.open(f'full/p{p:02d}.jpg').convert('RGB'); a=np.asarray(im).astype(int)
     x0,y0,x1,y1=200,350,1650,2850

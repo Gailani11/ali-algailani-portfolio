@@ -117,7 +117,7 @@ function Foldout({ p }: { p: PrintPiece }) {
 /** Chapter 05 — Print. White, quiet, with real paper depth in the shadows. */
 export function Print() {
   const { t, lang } = useLang();
-  const [abus, care, amal, ghams, kopii] = PRINTS;
+  const [abus, care, amal, ghamsa, kopii] = PRINTS;
   return (
     <>
       <SectionHeader chapter={CHAPTERS[4]} token="print" />
@@ -130,7 +130,7 @@ export function Print() {
           </p>
         </div>
         <Menu p={amal} />
-        <Menu p={ghams} />
+        <Menu p={ghamsa} />
         <Foldout p={kopii} />
         <Brochure p={abus} />
         <Brochure p={care} flip />

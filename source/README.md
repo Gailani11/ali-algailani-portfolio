@@ -2,7 +2,7 @@
 
 A cinematic, bilingual (EN / AR) portfolio website built from **Ali Algailani Portfolio 2026.pdf**.
 Every project, caption, palette, page count and contact detail comes from the PDF (`src/data/content.ts`),
-and every image is extracted from its pages (`public/assets`, 152 WebP files, ~8 MB).
+and every image is extracted from its pages (`public/assets`, 154 WebP files, ~9 MB).
 
 ## Run it
 
@@ -56,7 +56,7 @@ src/
   styles/                tokens, base, chrome, home, chapters, pages
 public/
   assets/                images extracted from the PDF
-  Ali-Algailani-Portfolio-2026.pdf   web-optimised copy of the PDF (13 MB) for the download button
+  Ali-Algailani-Portfolio-2026.pdf   web-optimised copy of the PDF (12 MB) for the download button
 ```
 
 ## Updating content
@@ -82,4 +82,13 @@ Before building from source, copy them back:
 ```bash
 cp -r ../website/assets public/assets
 cp ../website/Ali-Algailani-Portfolio-2026.pdf public/
+```
+
+## Single-file copy for sharing
+
+`tools/make_share.py` packs the built site into one `.html` file (images and a lighter PDF
+embedded) that can be sent to someone and opened directly:
+
+```bash
+python3 tools/make_share.py dist path/to/light.pdf Ali-Algailani-Portfolio.html
 ```

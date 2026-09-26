@@ -7,9 +7,12 @@ import { scroll } from '../lib/scroll';
 /**
  * A physical-feeling phone built in CSS: titanium edge, bezel, dynamic island, glass
  * sheen. Screens are the real app screens extracted from the portfolio; switching
- * screens slides the new one in from the direction of travel. The device tilts
- * toward the pointer in 3D on desktop and accepts swipes on touch.
+ * screens slides the new one in from the direction of travel. At rest it faces the
+ * reader square on; it leans a little toward the pointer on desktop and accepts swipes on touch.
  */
+/** Screens whose design runs content across the top centre, where the island would cover it. */
+const OPEN_TOP = new Set(['ui/trackulizer/s04']);
+
 export function Phone({
   screens,
   index,
@@ -37,7 +40,7 @@ export function Phone({
       const r = st.getBoundingClientRect();
       if (r.bottom < 0 || r.top > scroll.vh) return;
       const q = (r.top + r.height / 2) / scroll.vh - 0.5;
-      dv.style.transform = `rotateX(${q * -10}deg) rotateY(${-6 + q * 8}deg)`;
+      dv.style.transform = `rotateX(${q * -6}deg) rotateY(${q * 5}deg)`;
       dv.style.setProperty('--sheen', `${45 + q * 30}%`);
     });
   }, []);
@@ -63,13 +66,14 @@ export function Phone({
       const r = st.getBoundingClientRect();
       const px = (e.clientX - r.left) / r.width - 0.5;
       const py = (e.clientY - r.top) / r.height - 0.5;
-      ty = px * 16;
-      tx = -py * 12;
+      ty = px * 10;
+      tx = -py * 7;
       if (!raf) raf = requestAnimationFrame(loop);
     };
+    // at rest the phone faces the reader square on
     const leave = () => {
-      tx = 4;
-      ty = -8;
+      tx = 0;
+      ty = 0;
       if (!raf) raf = requestAnimationFrame(loop);
     };
     leave();
@@ -100,7 +104,7 @@ export function Phone({
         if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
       }}
     >
-      <div className="phone" ref={device} role="group" aria-roledescription="carousel" aria-label={`${label} screens`}>
+      <div className={`phone ${OPEN_TOP.has(screens[index]?.img) ? 'phone--open-top' : ''}`} ref={device} role="group" aria-roledescription="carousel" aria-label={`${label} screens`}>
         <div className="phone__edge" aria-hidden="true" />
         <div className="phone__screen">
           {screens.map((s, i) => {

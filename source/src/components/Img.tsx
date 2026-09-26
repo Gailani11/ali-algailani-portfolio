@@ -1,6 +1,8 @@
 import { DIMS } from '../data/assets';
 
-export const assetUrl = (key: string) => `assets/${key}.webp`;
+/** Asset path; a single-file export can supply embedded copies through `__AA_ASSETS`. */
+const embedded = (globalThis as { __AA_ASSETS?: Record<string, string> }).__AA_ASSETS;
+export const assetUrl = (key: string) => embedded?.[key] ?? `assets/${key}.webp`;
 
 /**
  * Image from the extracted portfolio assets. Intrinsic width/height come from the
