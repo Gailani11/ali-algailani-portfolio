@@ -201,6 +201,16 @@ main:lang(ar) :is(.case__kicker, .next__kicker, .case__crumbs, .dl__label) {
   color: var(--accent);
 }
 
+/* external-link mark after WhatsApp / PDF labels */
+.ext-icon {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  margin-inline-start: 0.4em;
+  vertical-align: -0.14em;
+}
+
 /* underline link: hidden at rest, wipes in on hover (nav); .ulink in content keeps a resting line */
 .ulink {
   position: relative;

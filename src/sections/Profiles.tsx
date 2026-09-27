@@ -62,16 +62,13 @@ function Publication({ p, i }: { p: Profile; i: number }) {
  */
 export function Profiles() {
   const { t, lang } = useLang();
-  const total = PROFILES.reduce((s, p) => s + p.pageCount, 0);
   return (
     <>
       <SectionHeader chapter={CHAPTERS[3]} token="profiles" />
       <section className="library" aria-label={lang === 'ar' ? CHAPTERS[3].ar : CHAPTERS[3].en}>
         <header className="library__head" data-folio="32" data-label={lang === 'ar' ? CHAPTERS[3].ar : CHAPTERS[3].en} data-chapter="04">
           <p className="library__lede" data-rv="">
-            {t.profilesLede[0]}
-            <br />
-            <span>{t.profilesLede[1](total)}</span>
+            {t.profilesLede}
           </p>
         </header>
         <div className="library__grid">

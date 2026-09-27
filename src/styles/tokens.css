@@ -42,6 +42,9 @@
   --ease-out: cubic-bezier(0.16, 0.84, 0.24, 1);
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
 
+  /* external-link mark (same drawing as components/ExtIcon.tsx), for CSS masks */
+  --ext-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10.5 5.5H6A1.5 1.5 0 0 0 4.5 7v11A1.5 1.5 0 0 0 6 19.5h11a1.5 1.5 0 0 0 1.5-1.5v-4.5M14 4.5h5.5V10M19.5 4.5l-9 9' fill='none' stroke='%23000' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
   /* layout */
   --gutter: clamp(18px, 4.2vw, 72px);
   --nav-h: 76px;

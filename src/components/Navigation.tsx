@@ -7,6 +7,7 @@ import { useLang } from '../lib/i18n';
 import type { Lang } from '../lib/i18n';
 import { useMagnetic } from './MagneticButton';
 import { Ar } from './Text';
+import { ExtIcon } from './ExtIcon';
 
 const LINKS = ['work', 'about', 'index', 'contact'] as const;
 const LINK_AR: Record<(typeof LINKS)[number], string> = { work: 'أعمال', about: 'عني', index: 'الفهرس', contact: 'تواصل' };
@@ -65,6 +66,7 @@ export function Navigation() {
   const { lang, t } = useLang();
   const brand = useMagnetic<HTMLSpanElement>(0.25);
   const panel = useRef<HTMLDivElement>(null);
+  const menuGrid = useRef<HTMLDivElement>(null);
   const opener = useRef<HTMLButtonElement>(null);
   const bar = useRef<HTMLElement>(null);
 
@@ -96,6 +98,9 @@ export function Navigation() {
   useEffect(() => {
     scroll.lock(open);
     document.documentElement.classList.toggle('menu-open', open);
+    // the menu always opens at its top, with the bar behind the name see-through again
+    if (menuGrid.current) menuGrid.current.scrollTop = 0;
+    bar.current?.classList.remove('is-menu-scrolled');
     if (open) {
       const first = panel.current?.querySelector<HTMLElement>('a, button');
       setTimeout(() => first?.focus({ preventScroll: true }), 350);
@@ -169,7 +174,11 @@ export function Navigation() {
 
       <div id="menu" ref={panel} className={`menu ${open ? 'is-open' : ''}`} aria-hidden={!open} inert={open ? undefined : ''} dir={isAr ? 'rtl' : 'ltr'} lang={lang}>
         <div className="menu__bg" />
-        <div className="menu__grid">
+        <div
+          className="menu__grid"
+          ref={menuGrid}
+          onScroll={() => bar.current?.classList.toggle('is-menu-scrolled', (menuGrid.current?.scrollTop ?? 0) > 6)}
+        >
           <nav className="menu__primary" aria-label={t.menu}>
             {LINKS.map((l, i) => (
               <RLink key={l} to={l} className="menu__link" onNavigate={close} style={{ '--i': i }}>
@@ -209,12 +218,14 @@ export function Navigation() {
           <div className="menu__foot">
             <a className="ulink" href={PERSON.whatsapp} target="_blank" rel="noopener noreferrer" data-cursor="open">
               {t.whatsapp}
+              <ExtIcon />
             </a>
             <span className="menu__mail" dir="ltr">
               {PERSON.email}
             </span>
             <a className="ulink" href={PERSON.pdf} target="_blank" rel="noopener" data-cursor="open">
               {t.portfolioPdf}
+              <ExtIcon />
             </a>
           </div>
         </div>

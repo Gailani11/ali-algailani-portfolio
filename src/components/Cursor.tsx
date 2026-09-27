@@ -8,7 +8,7 @@ import { useLang } from '../lib/i18n';
  * Custom cursor — a solid circle that trails the pointer closely. Its colour follows
  * the page: ink over light sections, paper over dark ones, cross-fading as you move
  * or scroll between them. Over elements carrying `data-cursor` it grows into a disc
- * with a word (VIEW, EXPLORE, OPEN ↗, DRAG…); over plain links it opens into a ring.
+ * with a word (VIEW, EXPLORE, OPEN + link icon, DRAG…); over plain links it opens into a ring.
  * Disabled on touch devices.
  */
 export function Cursor() {
@@ -37,6 +37,7 @@ export function Cursor() {
       state = s;
       const word = labels.current[s];
       el.dataset.state = s ? (word ? 'label' : s) : '';
+      el.dataset.kind = s;
       if (lab.current) lab.current.textContent = word ?? '';
     };
     const setTone = (tn: string) => {

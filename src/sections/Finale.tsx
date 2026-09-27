@@ -7,6 +7,7 @@ import { MagneticButton } from '../components/MagneticButton';
 import { Img } from '../components/Img';
 import { useRouter } from '../lib/router';
 import { useLang } from '../lib/i18n';
+import { ExtIcon } from '../components/ExtIcon';
 
 const ROLE_AR = 'مصمم جرافيك وواجهات مستخدم أول';
 
@@ -92,12 +93,14 @@ export function Finale() {
         </h2>
         <MagneticButton href={PERSON.whatsapp} external className="finale__cta" cursor="open">
           <span>{t.startConversation}</span>
-          <i>{t.whatsapp}</i>
+          <i>
+            {t.whatsapp}
+            <ExtIcon />
+          </i>
         </MagneticButton>
       </div>
 
       <div className="finale__thanks">
-        <Eyebrow className="finale__kicker">{isAr ? 'تواصل معي' : THANKS.kicker}</Eyebrow>
         <p className="finale__ar" lang="ar" dir="rtl" data-rv="">
           {THANKS.ar}
         </p>
@@ -106,6 +109,8 @@ export function Finale() {
         </p>
         <span className="finale__rule" data-rv="" />
         <Ar className="finale__line">{THANKS.lineAr}</Ar>
+        {/* heads the contact details that follow */}
+        <Eyebrow className="finale__kicker">{isAr ? 'تواصل معي' : THANKS.kicker}</Eyebrow>
       </div>
 
       <div className="finale__card">

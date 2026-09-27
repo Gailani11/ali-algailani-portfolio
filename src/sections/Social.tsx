@@ -153,7 +153,7 @@ export function Social() {
             {[...names, ...names, ...names, ...names].map((n, i) => (
               <span key={i}>
                 {n}
-                <i>✳</i>
+                <i className="social__dot" />
               </span>
             ))}
           </div>

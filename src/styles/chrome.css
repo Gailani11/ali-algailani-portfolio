@@ -53,6 +53,15 @@
 .nav.is-menu .nav__glass {
   opacity: 0;
 }
+/* once the open menu is scrolled, the bar behind the name and close button turns solid
+   so the links pass under it instead of through it */
+.nav.is-menu.is-menu-scrolled .nav__glass {
+  opacity: 1;
+  background: var(--ink);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
 .nav.is-menu {
   --nav-fg: #f5f4f1;
   --nav-dim: rgba(245, 244, 241, 0.62);
@@ -670,6 +679,19 @@
   opacity: 1;
   transform: none;
   transition-delay: 0.1s;
+}
+
+/* "open" links: the external-link mark after the word, drawn in the label colour */
+.cursor[data-kind='open'] .cursor__label::after {
+  content: '';
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  margin-inline-start: 0.4em;
+  vertical-align: -0.24em;
+  background: currentColor;
+  -webkit-mask: var(--ext-icon) center / contain no-repeat;
+  mask: var(--ext-icon) center / contain no-repeat;
 }
 
 /* ---------- grain ---------- */
