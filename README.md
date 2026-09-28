@@ -28,7 +28,7 @@ portfolio/
 │   │   ├── pr/               print
 │   │   ├── sm/               social media
 │   │   └── ui/               UI/UX (Fully Charged, Trackulizer)
-│   ├── Ali-Algailani-Portfolio-2026.pdf   the "Download portfolio" file (web copy, 12 MB)
+│   ├── Ali-Algailani-Portfolio-2026.pdf   the "Download portfolio" file (20 MB)
 │   ├── favicon.svg
 │   └── og.jpg                social-share image
 ├── tools/                    one-off image pipeline (not used by the build)

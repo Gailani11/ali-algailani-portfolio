@@ -20,3 +20,10 @@ which already contains all of that work.
 
 From `v8` on, every change is committed and pushed here as soon as it is made, and Vercel
 publishes each push to `main` automatically (connected 28 Sep 2026).
+
+## Since v8 (each change deploys automatically)
+
+| Date (Riyadh) | Change |
+| --- | --- |
+| 28 Sep 2026 | Contact email changed to info@alialgailani.com across the site. |
+| 28 Sep 2026 | Download button serves the updated portfolio PDF with the new email (Ali's own export, 20 MB, 200 ppi pages). |
