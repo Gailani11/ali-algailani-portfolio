@@ -43,8 +43,10 @@ portfolio/
 ## Live site
 
 The Vercel project `ali-algailani-portfolio-2026` is connected to this repository:
-every push to `main` builds and publishes https://ali-algailani-portfolio-2026.vercel.app
-automatically. No zip uploads are needed any more.
+every push to `main` builds and publishes **https://alialgailani.com** automatically
+(also reachable at www.alialgailani.com and https://ali-algailani-portfolio-2026.vercel.app).
+No zip uploads are needed any more. Only the web records point at Vercel; the domain's
+email (info@alialgailani.com) is unaffected.
 
 ## Deploy as a new Vercel project
 
