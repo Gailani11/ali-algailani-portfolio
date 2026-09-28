@@ -40,6 +40,12 @@ portfolio/
 └── README.md
 ```
 
+## Live site
+
+The Vercel project `ali-algailani-portfolio-2026` is connected to this repository:
+every push to `main` builds and publishes https://ali-algailani-portfolio-2026.vercel.app
+automatically. No zip uploads are needed any more.
+
 ## Deploy as a new Vercel project
 
 `vercel.json` already tells Vercel how to install, build and publish, so no settings

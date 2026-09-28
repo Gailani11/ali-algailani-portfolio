@@ -18,4 +18,5 @@ The first three deliveries (25 Sep 2026: first build, the file-opening fix, and 
 refinement round) were not kept as separate source snapshots, so the history starts at `v4`,
 which already contains all of that work.
 
-From `v8` on, every change is committed and pushed here as soon as it is made.
+From `v8` on, every change is committed and pushed here as soon as it is made, and Vercel
+publishes each push to `main` automatically (connected 28 Sep 2026).
