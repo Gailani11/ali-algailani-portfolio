@@ -30,7 +30,7 @@ export const PERSON = {
   nameEn: 'Ali Algailani',
   nameAr: 'علي الجيلاني',
   title: 'Senior Graphic & UI/UX Designer',
-  email: 'ali.gailani11@gmail.com',
+  email: 'info@alialgailani.com',
   phone: '+966 50 235 1845',
   whatsapp: 'https://wa.me/966502351845',
   location: 'Saudi Arabia',
