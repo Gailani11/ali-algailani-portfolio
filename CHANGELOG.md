@@ -29,3 +29,4 @@ publishes each push to `main` automatically (connected 28 Sep 2026).
 | 28 Sep 2026 | Download button serves the updated portfolio PDF with the new email (Ali's own export, 20 MB, 200 ppi pages). |
 | 28 Sep 2026 | Link previews (WhatsApp, X, LinkedIn): Arabic-first title and description, share image recut from the portfolio cover, absolute image URL. |
 | 28 Sep 2026 | alialgailani.com is the site's main address: canonical link, share links and structured data now point to it. |
+| 14 Oct 2026 | New unlisted page `/half-million/` (public/half-million/): six unofficial ad concepts for Half Million with viewer, contact block, downloadable concepts PDF and its own link-preview image. `noindex`, not linked from the main site. |
