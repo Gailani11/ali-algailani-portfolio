@@ -612,15 +612,255 @@ html[dir=ltr] .wa{inset-inline-end:calc(22px + env(safe-area-inset-right,0px))}
   .rv{opacity:1!important;transform:none!important}
   .curtain{display:none}
 }
+
+/* =====================================================================================
+   v4 — full-width layout, uncropped banners, dark bands, page wipe, richer motion
+   (kept last in the stylesheet so these rules win over the earlier ones)
+   ===================================================================================== */
+:root{--gut:clamp(20px,4.4vw,84px);--dark:#1d1d1d}
+.wrap{max-width:none;padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
+
+/* ---------- page wipe: red sheet, then a dark sheet carrying the white logo, rising bottom → top ---------- */
+.wipe{position:fixed;inset:0;z-index:120;pointer-events:none;visibility:hidden}
+.wipe > *{position:absolute;inset:0;transform:translateY(101%);will-change:transform}
+.wipe .w1{background:var(--red)}
+.wipe .w2{background:var(--dark);display:grid;place-items:center}
+.wipe .w2 img{width:clamp(96px,10vw,130px);opacity:0;transform:translateY(18px) scale(.96)}
+.wipe.in{visibility:visible;pointer-events:auto}
+.wipe.in .w1{transition:transform .55s cubic-bezier(.76,0,.24,1);transform:none}
+.wipe.in .w2{transition:transform .55s cubic-bezier(.76,0,.24,1) .1s;transform:none}
+.wipe.in .w2 img{transition:opacity .35s ease .42s,transform .6s cubic-bezier(.22,.8,.12,1) .42s;opacity:1;transform:none}
+.wipe.in.out .w2{transition:transform .65s cubic-bezier(.76,0,.24,1);transform:translateY(-101%)}
+.wipe.in.out .w1{transition:transform .65s cubic-bezier(.76,0,.24,1) .1s;transform:translateY(-101%)}
+.wipe.in.out .w2 img{transition:none}
+.curtain{background:var(--dark)}
+.curtain.intro{animation:introUp .85s cubic-bezier(.76,0,.24,1) 1.15s forwards}
+@keyframes introUp{0%{transform:none;opacity:1;visibility:visible}99%{transform:translateY(-101%);opacity:1;visibility:visible}100%{transform:translateY(-101%);opacity:0;visibility:hidden}}
+
+/* ---------- headings: words rise out of a mask ---------- */
+.wd{display:inline-block;overflow:hidden;vertical-align:top;padding-block:.14em .16em;margin-block:-.14em -.16em}
+.wd > span{display:inline-block;transform:translateY(110%);transition:transform 1.05s cubic-bezier(.22,.8,.12,1);transition-delay:calc(var(--d,0s) + var(--i,0) * 55ms)}
+.sp-on .wd > span{transform:none}
+/* large photos are uncovered by a sliding panel */
+.rvimg{clip-path:inset(0 0 100% 0);transition:clip-path 1.25s cubic-bezier(.77,0,.18,1)}
+.rvimg > img{transform:scale(1.18);transition:transform 1.8s cubic-bezier(.22,.61,.36,1)}
+.rvimg.rv-on{clip-path:inset(0 0 0 0)}
+.rvimg.rv-on > img{transform:none}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(8px,1.2vw,18px)}
+.hero-top{padding-block:clamp(18px,2.6vw,38px) clamp(22px,2.4vw,34px);gap:clamp(14px,1.6vw,22px)}
+.hero-top h1 em{color:inherit}
+.hero-top .ht-b{display:grid;justify-items:start;gap:22px}
+.hero-top .ht-b .lead{max-width:780px}
+.slider{aspect-ratio:auto;min-height:0;display:grid;border-radius:28px;background:var(--dark);overflow:hidden;isolation:isolate}
+.stage{position:relative;aspect-ratio:3.15/1;overflow:hidden;background:#efe6dc;cursor:pointer}
+.stage .slide{position:absolute;inset:0;opacity:0;transition:opacity 1.3s cubic-bezier(.4,0,.2,1)}
+.stage .slide.on{opacity:1;z-index:2}
+.stage .slide.leaving{opacity:1;z-index:1;transition:none}
+.stage .sbg{position:absolute;inset:-8%;width:116%;height:116%;object-fit:cover;opacity:.95}
+.stage .im{position:absolute;max-width:none;transform-origin:var(--ox,50%) var(--oy,50%);transform:scale(1.055);transition:transform 7.5s cubic-bezier(.2,.6,.3,1);will-change:transform}
+.stage .slide.on .im{transform:scale(1)}
+.stage .im.fx{-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.stage .im.fy{-webkit-mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(180deg,transparent,#000 9%,#000 91%,transparent)}
+.sbar{display:flex;align-items:center;justify-content:space-between;gap:18px 30px;padding:clamp(16px,1.8vw,24px) clamp(20px,2.4vw,34px);color:#fff;flex-wrap:wrap}
+.scap{display:flex;align-items:center;gap:14px 28px;min-width:0;flex-wrap:wrap}
+.scap .st{display:grid;gap:2px;min-width:0}
+.scap .sk{font-size:12.5px;color:rgba(255,255,255,.6)}
+.scap b{font-size:clamp(19px,1.6vw,25px);font-weight:600;line-height:1.3}
+.scap .sn{font-size:13.5px;color:rgba(255,255,255,.72)}
+.scap .sgo{display:inline-flex;align-items:center;gap:8px;height:42px;padding-inline:18px;border-radius:999px;border:1.5px solid rgba(255,255,255,.3);font-size:14px;font-weight:500;transition:background .35s,color .35s,border-color .35s;white-space:nowrap}
+.scap .sgo svg{width:15px;height:15px}
+html[dir=rtl] .scap .sgo svg{transform:scaleX(-1)}
+@media (hover:hover){.scap:hover .sgo{background:#fff;color:var(--ink);border-color:#fff}}
+.sctl{display:flex;align-items:center;gap:14px}
+.sctl .ic{background:transparent;border-color:rgba(255,255,255,.3);color:#fff}
+@media (hover:hover){.sctl .ic:hover{background:#fff;color:var(--ink);border-color:#fff}}
+html[dir=rtl] .sctl .ic svg{transform:scaleX(-1)}
+.sctl .counter{color:#fff;min-width:56px;text-align:center}
+.sbars{display:flex;gap:8px}
+.sbars button{width:44px;height:28px;display:grid;align-items:center}
+.sbars i{display:block;height:3px;border-radius:3px;background:rgba(255,255,255,.25);overflow:hidden;position:relative}
+.sbars i b{position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:right}
+html[dir=ltr] .sbars i b{transform-origin:left}
+.sbars button.on i b{animation:fillbar 7s linear forwards}
+.sbars button.done i b{transform:scaleX(1)}
+
+/* ---------- full-width dark band: materials ---------- */
+.dark3{margin-top:clamp(64px,8vw,120px);background:var(--dark)}
+.mat3{transition:transform .55s cubic-bezier(.22,.8,.12,1),background .45s,border-color .45s,box-shadow .55s}
+.mat3 .disc{transition:background .45s}
+.mat3 b,.mat3 small{transition:color .35s}
+.mat3 .grid4 span{transition:background .4s,transform .5s cubic-bezier(.22,.8,.12,1)}
+@media (hover:hover){
+  .mat3:hover{transform:translateY(-10px) scale(1.045);background:#fff;border-color:#fff;box-shadow:0 34px 60px -34px rgba(0,0,0,.75)}
+  .mat3:hover .disc{background:var(--red-wash)}
+  .mat3:hover b{color:var(--red)}
+  .mat3:hover small{color:var(--mute)}
+  .mat3:hover .grid4 span{background:var(--red)}
+  .mat3:hover .grid4 span:nth-child(1){transform:translate(-3px,-3px)}
+  .mat3:hover .grid4 span:nth-child(2){transform:translate(3px,-3px)}
+  .mat3:hover .grid4 span:nth-child(3){transform:translate(-3px,3px)}
+  .mat3:hover .grid4 span:nth-child(4){transform:translate(3px,3px)}
+}
+
+/* ---------- full-width dark band: made locally ---------- */
+.made4{background:var(--dark);color:#fff;overflow:hidden;margin-top:clamp(64px,8vw,120px)}
+.made4 .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch;gap:clamp(30px,5vw,90px)}
+.made4 .mt{display:grid;gap:22px;align-content:center;padding-block:clamp(56px,7vw,110px) clamp(30px,3vw,44px);min-width:0}
+.made4 h2{color:#fff;font-size:clamp(32px,4vw,60px);line-height:1.15}
+.made4 h2 > span:not(.wd){display:block;color:var(--red)}
+.made4 .lead{color:rgba(255,255,255,.72);max-width:640px}
+.made4 .row{display:flex;gap:12px;flex-wrap:wrap}
+.made4 .feats3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid rgba(255,255,255,.12);margin-top:6px}
+.made4 .feats3 div{display:grid;justify-items:start;align-content:start;gap:12px;padding:22px 18px 0;border-inline-start:1px solid rgba(255,255,255,.12);font-weight:500;font-size:15.5px;line-height:1.5;color:#fff}
+.made4 .feats3 div:first-child{border-inline-start:0;padding-inline-start:0}
+.made4 .feats3 .fi{width:48px;height:48px;border-radius:50%;background:rgba(174,31,35,.18);color:#fff;display:grid;place-items:center;border:1px solid rgba(174,31,35,.55)}
+.made4 .feats3 .fi svg{width:22px;height:22px}
+.made4 .mp{position:relative;margin-inline-end:calc(-1 * max(var(--gut),env(safe-area-inset-left,0px)));min-height:100%;overflow:hidden}
+.made4 .mp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.made4 .mp::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(29,29,29,0) 72%,var(--dark) 100%);pointer-events:none}
+html[dir=ltr] .made4 .mp::after{background:linear-gradient(to left,rgba(29,29,29,0) 72%,var(--dark) 100%)}
+.made4 + .cta3{margin-top:0}
+.mstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.12)}
+.mstats > div{display:flex;align-items:center;gap:20px;padding:clamp(26px,3vw,44px) clamp(14px,2vw,34px);border-inline-start:1px solid rgba(255,255,255,.12);min-width:0}
+.mstats > div:first-child{border-inline-start:0;padding-inline-start:0}
+.mstats .si{width:clamp(52px,4.4vw,66px);height:clamp(52px,4.4vw,66px);border-radius:50%;background:var(--red);display:grid;place-items:center;flex:none}
+.mstats .si svg{width:44%;height:44%;color:#fff}
+.mstats .sv{display:grid;min-width:0}
+.mstats b{font-size:clamp(40px,4.6vw,78px);font-weight:700;line-height:1;color:#fff;font-variant-numeric:tabular-nums}
+.mstats span.sl{color:rgba(255,255,255,.62);font-size:clamp(13.5px,1.05vw,16px);margin-top:8px}
+
+/* ---------- full-width red band: catalogue ---------- */
+.cta3{border-radius:0;padding:0;display:block;margin-top:clamp(64px,8vw,120px)}
+.cta3::before{inset-inline-end:-120px;top:-300px;width:760px;height:760px;border-width:110px}
+.cta3 .in{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:30px;align-items:center;padding-block:clamp(56px,7vw,110px)}
+.cta3 h2{font-size:clamp(32px,4vw,60px)}
+.cta3 .cover{width:min(320px,100%)}
+footer{margin-top:0}
+#app > :last-child:not(.cta3):not(.sec){margin-bottom:clamp(64px,8vw,120px)}
+
+/* ---------- inner page heads: dark ---------- */
+.phead{background:var(--dark);border-bottom:0}
+.phead h1{color:#fff}
+.phead .crumb{color:rgba(255,255,255,.6)}
+.phead .crumb span{color:#fff}
+@media (hover:hover){.phead .crumb a:hover{color:#fff}}
+.phead .wrap{padding-block:clamp(40px,5.4vw,80px)}
+
+/* ---------- products page ---------- */
+.chip.on{background:var(--red);border-color:var(--red);color:#fff}
+.chip.on small{color:rgba(255,255,255,.8)}
+.side .box{border-radius:14px}
+.catlist{overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.catlist button{border-radius:8px}
+@media (min-width:1440px){.pgrid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media (min-width:1500px){.bento{grid-auto-rows:270px}}
+@media (min-width:1400px){.pd{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.pd .ph{aspect-ratio:5/4}}
+
+/* ---------- contact page ---------- */
+.ct4{padding-block:clamp(28px,3.4vw,48px) 0}
+.ct4 .cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(0,1.4fr);gap:14px}
+.ct4 .hrs div{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:14px;align-items:baseline}
+.ct4 .hrs em{text-align:end}
+.ct4 .cc{align-items:flex-start;position:relative}
+.ct4 .cc .cp{position:absolute;top:14px;inset-inline-end:14px}
+.ct4 .cc > div > span{padding-inline-end:64px}
+.ct4 .cc.hr > div > span{padding-inline-end:0}
+.cmain{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(22px,2.6vw,40px);margin-top:clamp(22px,2.6vw,36px);align-items:start}
+.brp{display:grid;gap:16px;min-width:0}
+.brp .bh{display:grid;gap:6px}
+.brp h2{font-size:clamp(24px,2.4vw,34px)}
+.bchips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.bchip{display:grid;gap:1px;text-align:start;padding:11px 14px;border-radius:12px;border:1.5px solid var(--line);background:#fff;transition:background .3s,border-color .3s,color .3s,transform .4s var(--ease);min-width:0}
+.bchip b{font-weight:600;font-size:15px;line-height:1.35}
+.bchip span{font-size:12.5px;color:var(--mute)}
+@media (hover:hover){.bchip:hover{border-color:var(--red);transform:translateY(-2px)}}
+.bchip.on{background:var(--red);border-color:var(--red);color:#fff}
+.bchip.on span{color:rgba(255,255,255,.8)}
+.cmain .mapbox{position:relative;top:0;aspect-ratio:16/9}
+.mapbox .mcap .mi{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:2px}
+.cmain .qf{margin:0;align-self:stretch;grid-template-rows:auto auto auto auto minmax(0,1fr) auto}
+.cmain .qf .f.full{grid-template-rows:auto minmax(0,1fr)}
+.cmain .qf .fw.ta{height:100%}
+.cmain .qf .fw.ta textarea{height:100%;min-height:130px}
+.ct4 .cc .cp{top:12px;padding:2px 10px;font-size:12px;line-height:1.6}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .ct4 .cgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mstats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mstats > div:nth-child(3){border-inline-start:0;padding-inline-start:0}
+  .mstats > div:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}
+}
+@media (max-width:960px){
+  .stage{aspect-ratio:2/1}
+  .cta3 .cover{width:min(240px,64%)}
+  .made4 .in{grid-template-columns:minmax(0,1fr)}
+  .made4 .mp{order:-1;margin-inline:calc(-1 * max(var(--gut),env(safe-area-inset-left,0px)));min-height:0;aspect-ratio:16/10}
+  html[dir] .made4 .mp::after{background:linear-gradient(to top,var(--dark) 0%,rgba(29,29,29,0) 35%)}
+  .made4 .mt{padding-top:10px}
+  .cta3 .in{grid-template-columns:minmax(0,1fr)}
+  .cmain{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .slider{border-radius:22px}
+  .stage{aspect-ratio:2/1}
+  .sbar{padding:18px 18px 16px;gap:14px}
+  .sbar{position:relative}
+  .scap{gap:14px;width:100%}
+  .scap .st{width:100%}
+  .scap .sgo{height:42px;padding-inline:16px}
+  .sctl{position:absolute;top:16px;inset-inline-end:16px;gap:8px}
+  .sctl .ic{width:40px;height:40px}
+  .scap .st{padding-inline-end:92px}
+  .sctl .counter{display:none}
+  .sbars{display:none}
+  .ct4 .cgrid{grid-template-columns:minmax(0,1fr)}
+  .made4 .feats3{grid-template-columns:minmax(0,1fr)}
+  .made4 .feats3 div{grid-template-columns:auto 1fr;align-items:center;padding:16px 0 0;border-inline-start:0}
+  .made4 .row .btn{flex:1 1 auto}
+  .mstats > div{flex-direction:column;align-items:flex-start;gap:12px;padding-inline:14px}
+  .mstats > div:nth-child(odd){padding-inline-start:0}
+  .bchip{padding:9px 10px;border-radius:10px}
+  .bchip b{font-size:14px}
+  .bchip span{font-size:11.5px;line-height:1.35}
+  .cmain .mapbox{aspect-ratio:4/3}
+  .ct4 .cgrid{gap:10px}
+  .ct4 .cc{padding:14px 16px}
+  .sectors{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+  .sector{padding:18px 6px;gap:10px;border-radius:16px}
+  .sector .icw{width:54px;height:54px}
+  .sector .icw img{width:28px;height:28px}
+  .sector b{font-size:13.5px;line-height:1.35}
+  .cta3 .row .btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+  .wd > span{transform:none!important}
+  .rvimg{clip-path:none!important}.rvimg > img{transform:none!important}
+}
+@media (min-width:641px) and (max-width:900px){.ct4 .hrs div{grid-template-columns:minmax(0,1fr)}.ct4 .hrs em{text-align:start}}
+@media (max-width:360px){
+  .mat3 b{font-size:12px}.mat3{padding-inline:2px}
+  .bt{padding:14px}.bt-go{display:none}.bt-tx{padding-inline-end:0}.bt-tx b{font-size:12.5px;overflow-wrap:anywhere}.bt-tx span{font-size:12px}
+}
+@media (max-width:380px){.ct4 .hrs div{grid-template-columns:minmax(0,1fr)}.ct4 .hrs em{text-align:start}}
+
+.stage .slide .im{inset:auto;object-fit:fill}
+.fg ul a.fi2::before{display:none}
+.fg ul a.fi2{display:flex}
+.topbar a{color:inherit}
+@media (hover:hover){.topbar a:hover{color:#fff}}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
+<div class="wipe" id="wipe" aria-hidden="true"><div class="w1"></div><div class="w2"><img src="logo-white.svg" alt=""></div></div>
 
 <div class="topbar">
   <div class="wrap">
     <div class="g">
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="ltr num">920002480</span></span>
-      <span class="hide-m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="ltr">info@jawad.com.sa</span></span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><a class="ltr num" href="tel:920002480">920002480</a></span>
+      <span class="hide-m"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><a class="ltr" href="mailto:info@jawad.com.sa">info@jawad.com.sa</a></span>
     </div>
     <div class="g r">
       <span id="st"><i class="dot"></i><span id="stT"></span></span>
@@ -671,8 +911,8 @@ html[dir=ltr] .wa{inset-inline-end:calc(22px + env(safe-area-inset-right,0px))}
     <div class="fg">
       <div><img class="fl" src="logo-white.svg" alt="Jawad"><p data-t="aboutP1"></p><div class="soc"><a href="https://api.whatsapp.com/send?phone=966555081276" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a><a href="Jawad-Catalogue.pdf" target="_blank" rel="noopener" aria-label="Catalog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg></a></div></div>
       <div><h5 data-t="fExplore"></h5><ul><li><a href="#home" data-t="nHome"></a></li><li><a href="#products" data-t="nProducts"></a></li><li><a href="#about" data-t="nAbout"></a></li><li><a href="#contact" data-t="nContact"></a></li></ul></div>
-      <div><h5 data-t="fQuick"></h5><ul><li><a href="Jawad-Catalogue.pdf" target="_blank" rel="noopener" data-t="fCatalog"></a></li><li><a href="#home" data-t="latest"></a></li><li><a href="#contact" data-t="nContact"></a></li></ul></div>
-      <div><h5 data-t="nContact"></h5><ul><li class="fi2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="jed"></span></li><li class="fi2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="ltr num">920002480</span></li><li class="fi2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="ltr">info@jawad.com.sa</span></li><li class="fi2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="hoursShort"></span></li></ul></div>
+      <div><h5 data-t="fQuick"></h5><ul><li><a href="Jawad-Catalogue.pdf" target="_blank" rel="noopener" data-t="fCatalog"></a></li><li><a href="#latest" data-t="latest"></a></li><li><a href="#branches" data-t="branchesT"></a></li><li><a href="#contact" data-t="nContact"></a></li></ul></div>
+      <div><h5 data-t="nContact"></h5><ul><li><a class="fi2" href="#branches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="jed"></span></a></li><li><a class="fi2" href="tel:920002480"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="ltr num">920002480</span></a></li><li><a class="fi2" href="mailto:info@jawad.com.sa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="ltr">info@jawad.com.sa</span></a></li><li><a class="fi2" href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="hoursShort"></span></a></li></ul></div>
     </div>
     <div class="fb"><span data-t="rights"></span><span class="ltr">jawad.com.sa</span></div>
   </div>
@@ -714,7 +954,7 @@ const I=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" fill="none" stroke="c
 const CATALOG='Jawad-Catalogue.pdf';
 const WA='966555081276';
 const TAGS=[{id:6,ar:'ألمنيوم',en:'Aluminium'},{id:5,ar:'ورق',en:'Paper'},{id:10,ar:'بلاستيك',en:'Plastic'},{id:7,ar:'باغاس',en:'Bagasse'},{id:11,ar:'خشب',en:'Wood'},{id:9,ar:'لداري',en:'LeDari'},{id:8,ar:'كنان',en:'KENAN'}];
-const SLIDES=[{img:'ban3.webp',t:10},{img:'ban1.webp',c:127},{img:'ban4.webp',t:7},{img:'ban2.webp',c:142}];
+const SLIDES=[{img:'ban3.webp',bg:'ban3-bg.webp',t:10,w:3810,h:800,b:[.075,.975,.0,1]},{img:'ban1.webp',bg:'ban1-bg.webp',c:127,w:3870,h:1624,b:[.15,.86,.24,.77]},{img:'ban4.webp',bg:'ban4-bg.webp',t:7,w:3810,h:800,b:[.035,.995,.0,.985]},{img:'ban2.webp',bg:'ban2-bg.webp',c:142,w:4342,h:1448,b:[.24,.77,.23,.80]}];
 const FEAT=[[144,[1748,1540,1962]],[146,[1068,1072]],[130,[2053,1131]],[178,[1458,2041]],[131,[1806,1952]]];
 const SECT=[['المطاعم','Restaurants'],['المقاهي','Cafés'],['المخابز','Bakeries'],['التموين','Catering'],['الفنادق','Hotels'],['متاجر الأغذية','Grocery Retailers']];
 /* branches exactly as listed on jawad.com.sa/contact-us (names, types, map points) */
@@ -791,13 +1031,26 @@ function parse(){const h=(location.hash||'#home').slice(1);
     /* unknown category / material links fall back to all products instead of breaking */
     const ok=m&&(m[1]==='c'?!!CAT[+m[2]]:TAGS.some(g=>g.id===+m[2]));
     return{r:'products',f:ok?{[m[1]==='c'?'cat':'tag']:+m[2]}:(m?{cat:0,tag:0}:null)}}
+  /* in-page anchors used by the footer */
+  if(h==='latest')return{r:'home',a:'latest'};
+  if(h==='branches')return{r:'contact',a:'branches'};
   if(['about','contact','home'].includes(h))return{r:h};return{r:'home'}}
-/* page change: the old page fades out, then the new one rises in piece by piece (see Motion) */
 function go(first){const R=parse();clearInterval(slideTimer);
-  const swap=()=>{render(R);if(!first)window.scrollTo(0,0)};
+  const swap=()=>{render(R);
+    const el=R.a&&document.getElementById(R.a);
+    if(el){const y=el.getBoundingClientRect().top+scrollY-(document.getElementById('hd').offsetHeight+12);window.scrollTo(0,Math.max(0,y))}
+    else if(!first)window.scrollTo(0,0)};
   if(first||reduce){swap();return}
-  app.classList.add('leaving');setTimeout(()=>{swap();app.classList.remove('leaving')},280);
+  /* page change: a red sheet and then a dark sheet carrying the logo rise over the page, the new page is drawn
+     underneath, and both sheets carry on upwards to uncover it */
+  const w=document.getElementById('wipe');clearTimeout(go.t1);clearTimeout(go.t2);
+  w.classList.remove('out');void w.offsetWidth;w.classList.add('in');
+  go.t1=setTimeout(()=>{swap();requestAnimationFrame(()=>{w.classList.add('out');go.t2=setTimeout(()=>w.classList.remove('in','out'),900)})},820);
 }
+/* a link to the page that is already open scrolls back to its top (or to its section) instead of doing nothing */
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a||a.getAttribute('href')!==(location.hash||'#home'))return;
+  e.preventDefault();const R=parse(),el=R.a&&document.getElementById(R.a);
+  window.scrollTo({top:el?Math.max(0,el.getBoundingClientRect().top+scrollY-(document.getElementById('hd').offsetHeight+12)):0,behavior:reduce?'auto':'smooth'})});
 function setNav(r){document.querySelectorAll('[data-r]').forEach(a=>a.classList.toggle('on',a.dataset.r===(r==='product'?'products':r)))}
 function render(R){route=R.r;setNav(R.r);
   if(R.r==='home')app.innerHTML=homeHTML();
@@ -816,19 +1069,20 @@ function slideInfo(s){if(s.t){const g=TAGS.find(x=>x.id===s.t);const cnt={};D.p.
   return{title:L==='ar'?t('matOf')+' '+tagN(g):tagN(g)+' '+t('matOf'),sub:top.join(L==='ar'?'، ':', '),n:D.p.filter(p=>p.g.includes(s.t)).length,href:'#products-t'+s.t}}
   const subs=[...new Set(D.p.filter(p=>p.c===s.c).map(p=>sub(p)))].filter(x=>x&&x!==catN(s.c)).slice(0,3);
   return{title:catN(s.c),sub:subs.join(L==='ar'?'، ':', '),n:CAT[s.c]?.n||0,href:'#products-c'+s.c}}
-function capHTML(i){const x=slideInfo(SLIDES[i]);return `<a class="cap" id="cap" href="${x.href}"><span class="cap-k">${t('featured')} <span class="num ltr">${String(i+1).padStart(2,'0')}</span></span><b>${esc(x.title)}</b><span class="cap-n">${x.sub?esc(x.sub)+' · ':''}<span class="num">${x.n}</span> ${t('items')}</span><span class="cap-go">${t('shopThis')}${CHEV}</span></a>`}
+function capHTML(i){const x=slideInfo(SLIDES[i]);return `<a class="scap" id="cap" href="${x.href}"><span class="st"><span class="sk">${t('featured')} <span class="num ltr">${String(i+1).padStart(2,'0')}</span></span><b>${esc(x.title)}</b><span class="sn">${x.sub?esc(x.sub)+' · ':''}<span class="num">${x.n}</span> ${t('items')}</span></span><span class="sgo">${t('shopThis')}${ARR}</span></a>`}
 function homeHTML(){
   const tagCount=id=>D.p.filter(p=>p.g.includes(id)).length;
   return `
 <section class="hero"><div class="wrap">
   <div class="hero-top">
     <div class="ht-a"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1></div>
-    <div class="ht-b"><p class="lead">${t('heroP')}</p><div class="row"><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a><a class="btn btn-ghost" href="#contact">${I('phone')}${t('nContact')}</a></div></div>
+    <div class="ht-b"><p class="lead">${t('heroP')}</p><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a></div>
   </div>
   <div class="slider" id="slider">
-    <div class="slides">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}
-      <div class="hero-ui"><button class="ic glass" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 04</span><div class="bars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic glass" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
-    ${capHTML(0)}
+    <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="sbg" src="${s.bg}" alt=""><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}</div>
+    <div class="sbar">${capHTML(0)}
+      <div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div>
+    </div>
   </div>
 </div></section>
 
@@ -845,56 +1099,65 @@ function homeHTML(){
   </div>
 </div></section>
 
-<section class="sec"><div class="wrap">
+<section class="sec" id="latest"><div class="wrap">
   <div class="head"><div><span class="kicker">${t('latestK')}</span><h2>${t('latest')}</h2></div>
     <div class="rail-ctl"><button class="ic" id="rPrev" aria-label="Previous">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg>'}</button><button class="ic" id="rNext" aria-label="Next">${'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg>'}</button></div></div>
   <div class="rail" id="rail">${D.latest.map(id=>card(P[id])).join('')}</div>
   <div class="track"><i id="trk"></i></div>
 </div></section>
 
-<section style="padding-bottom:clamp(64px,8vw,120px)"><div class="wrap"><div class="band"><div class="in">
-  <div style="display:grid;gap:20px;min-width:0"><span class="kicker k-dark">${t('madeK')}</span><h2>${t('madeT')}</h2><p class="lead">${t('madeP')}</p>
-    <div class="feats">${[['factory','f1'],['globe','f2'],['truck','f3']].map(f=>`<div><span class="fi">${I(f[0])}</span><span>${t(f[1])}</span></div>`).join('')}</div>
-    <div class="stats"><div><span class="si">${I('box')}</span><b class="num ltr" data-n="${D.p.length}">${D.p.length}</b><span>${t('stP')}</span></div><div><span class="si">${I('layers')}</span><b class="num ltr" data-n="${D.cats.length}">${D.cats.length}</b><span>${t('stC')}</span></div><div><span class="si">${I('leaf')}</span><b class="num ltr" data-n="7">7</b><span>${t('stM')}</span></div><div><span class="si">${I('store')}</span><b class="num ltr" data-n="6">6</b><span>${t('stS')}</span></div></div></div>
-  <div class="pic"><img src="about2.webp" alt="" id="bandImg"></div>
-</div></div></div></section>
-
-<section class="sec" style="padding-top:0"><div class="wrap">
-  <div class="head"><div><span class="kicker">${t('solK')}</span><h2>${t('solT')}</h2></div><p class="lead">${t('solP')}</p></div>
-  <div class="sectors">${SECT.map((s,i)=>`<div class="sector rv"><span class="icw"><img src="s${i+1}.svg" alt=""></span><b>${L==='ar'?s[0]:s[1]}</b></div>`).join('')}</div>
-</div></section>
-
-<section style="padding-bottom:clamp(64px,8vw,110px)"><div class="wrap"><div class="head" style="margin-bottom:22px"><div><span class="kicker">${t('brandsK')}</span></div></div></div>
+<section style="padding-bottom:clamp(56px,7vw,100px)"><div class="wrap"><div class="head" style="margin-bottom:22px"><div><span class="kicker">${t('brandsK')}</span></div></div></div>
   <div class="brands"><div class="mq">${[1,2,3,4,1,2,3,4,1,2,3,4,1,2,3,4].map(n=>`<img src="b${n}.svg" alt="">`).join('')}</div></div>
 </section>
 
-<section><div class="wrap"><div class="cta3">
+${madeHTML()}
+${ctaHTML()}`}
+function madeHTML(){return `<section class="made4" style="margin-top:0"><div class="wrap">
+  <div class="in">
+    <div class="mt"><span class="kicker">${t('madeK')}</span><h2>${t('madeT')}</h2><p class="lead">${t('madeP')}</p>
+      <div class="feats3">${[['factory','f1'],['globe','f2'],['truck','f3']].map(f=>`<div><span class="fi">${I(f[0])}</span><span>${t(f[1])}</span></div>`).join('')}</div>
+      <div class="row"><a class="btn btn-red" href="#about">${I('info')}${t('nAbout')}</a><a class="btn btn-line-w" href="#branches">${I('pin')}${t('branchesT')}</a></div></div>
+    <div class="mp rvimg"><img src="about2.webp" alt=""></div>
+  </div>
+  <div class="mstats">${[['box',D.p.length,'stP'],['layers',D.cats.length,'stC'],['leaf',7,'stM'],['store',6,'stS']].map(x=>`<div><span class="si">${I(x[0])}</span><div class="sv"><b class="num ltr" data-n="${x[1]}">${x[1]}</b><span class="sl">${t(x[2])}</span></div></div>`).join('')}</div>
+</div></section>`}
+function ctaHTML(){return `<section class="cta3"><div class="wrap"><div class="in">
   <div style="display:grid;gap:16px;min-width:0"><span class="kicker" style="color:#fff;opacity:.85">${t('catShort')}</span><h2>${t('ctaT')}</h2><p>${t('ctaP')}</p>
   <div class="row"><a class="btn btn-white" href="${CATALOG}" target="_blank" rel="noopener">${I('download')}${t('fCatalog')}</a><a class="btn btn-line-w" href="#contact">${I('phone')}${t('nContact')}</a></div></div>
   <a class="cover" href="${CATALOG}" target="_blank" rel="noopener" aria-label="${t('fCatalog')}"><img src="cat-cover.webp" alt="${t('fCatalog')}"></a>
 </div></div></section>`}
-/* hero title on one line: shrink to fit the width; on narrow phones where one line would be too small, let it wrap */
 function fitHero(){const h=document.querySelector('.hero-top h1');if(!h)return;
   h.classList.remove('two');h.style.fontSize='';const max=parseFloat(getComputedStyle(h).fontSize);
   const avail=h.parentElement.clientWidth;const r=document.createRange();r.selectNodeContents(h);const w=r.getBoundingClientRect().width;
   const fs=Math.min(84,max*(innerWidth<1100?1.4:1),max*avail/w*.985);
   if(fs>=(L==='ar'?28:30)){h.style.fontSize=fs.toFixed(2)+'px';return}
   /* phones: two balanced lines, as large as fits */
-  h.classList.add('two');const lines=()=>{const t=new Set();for(const q of r.getClientRects())if(q.width>1)t.add(Math.round(q.top/4));return t.size};
+  h.classList.add('two');const lines=()=>{const t=new Set();const wds=h.querySelectorAll('.wd');for(const q of (wds.length?[...wds].map(e=>e.getBoundingClientRect()):r.getClientRects()))if(q.width>1)t.add(Math.round(q.top/4));return t.size};
   let f=42;h.style.fontSize=f+'px';r.selectNodeContents(h);while(f>28&&lines()>2){f-=1;h.style.fontSize=f+'px';r.selectNodeContents(h)}
   if(lines()>2)h.style.fontSize='34px'}
 addEventListener('resize',()=>{if(route==='home')fitHero()});
+function fitSlides(){const st=document.getElementById('stage');if(!st)return;const W=st.clientWidth,H=st.clientHeight;if(!W||!H)return;
+  st.querySelectorAll('.slide').forEach((el,k)=>{const S=SLIDES[k],im=el.querySelector('.im'),[x0,x1,y0,y1]=S.b;
+    const pad=W<700?.012:.035,bw=Math.min(1,x1-x0+pad*2),bh=Math.min(1,y1-y0+pad*2),cx=(x0+x1)/2,cy=(y0+y1)/2;
+    const s=Math.min(Math.max(W/S.w,H/S.h),W/(bw*S.w),H/(bh*S.h)),dw=S.w*s,dh=S.h*s;
+    const pos=(V,d,c)=>{let p=V/2-c*d;if(d>=V)p=Math.min(0,Math.max(V-d,p));else p=Math.max(0,Math.min(V-d,p));return p};
+    const l=pos(W,dw,cx),tp=pos(H,dh,cy);
+    Object.assign(im.style,{left:l+'px',top:tp+'px',width:dw+'px',height:dh+'px'});
+    im.style.setProperty('--ox',((W/2-l)/dw*100).toFixed(1)+'%');im.style.setProperty('--oy',((H/2-tp)/dh*100).toFixed(1)+'%');
+    im.classList.toggle('fx',dw<W-1);im.classList.toggle('fy',dh<H-1)})}
+addEventListener('resize',()=>{if(route==='home')fitSlides()});
 function bindHome(){fitHero();document.fonts&&document.fonts.ready.then(fitHero);
-  // slider
-  const sl=[...document.querySelectorAll('.slide')],bars=[...document.querySelectorAll('#bars button')],cnt=document.getElementById('cnt');let i=0;
-  const show=n=>{if(n===i)return;const prev=sl[i];prev.classList.remove('on','enter');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
-    i=(n+sl.length)%sl.length;sl[i].classList.add('on','enter');bars.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});cnt.textContent=String(i+1).padStart(2,'0')+' / 0'+sl.length;
+  // slider: each photo is scaled so the products are always fully visible; any leftover area shows a soft blur of the same photo
+  const sl=[...document.querySelectorAll('.stage .slide')],bars=[...document.querySelectorAll('#bars button')],cnt=document.getElementById('cnt');let i=0;
+  fitSlides();
+  const show=n=>{if(n===i)return;const prev=sl[i];prev.classList.remove('on');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
+    i=(n+sl.length)%sl.length;sl[i].classList.add('on');bars.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});cnt.textContent=String(i+1).padStart(2,'0')+' / 0'+sl.length;
     const old=document.getElementById('cap');old.outerHTML=capHTML(i);
-    rv([...document.querySelectorAll('#cap > *')],.08,.35)};
+    rv([...document.querySelectorAll('#cap > *')],.1,.2)};
   document.getElementById('hPrev').onclick=()=>{show(i-1);restart()};document.getElementById('hNext').onclick=()=>{show(i+1);restart()};
   bars.forEach((b,k)=>b.addEventListener('click',()=>{show(k);restart()}));
-  const restart=()=>{clearInterval(slideTimer);if(!reduce)slideTimer=setInterval(()=>show(i+1),6500)};restart();
-  sl.forEach((s,k)=>s.addEventListener('click',()=>location.hash=slideInfo(SLIDES[k]).href.slice(1)));sl.forEach(s=>s.style.cursor='pointer');
+  const restart=()=>{clearInterval(slideTimer);if(!reduce)slideTimer=setInterval(()=>show(i+1),7000)};restart();
+  sl.forEach((s,k)=>s.addEventListener('click',()=>location.hash=slideInfo(SLIDES[k]).href.slice(1)));
   // rail
   const rail=document.getElementById('rail'),trk=document.getElementById('trk');
   const upd=()=>{const max=rail.scrollWidth-rail.clientWidth,w=rail.clientWidth/rail.scrollWidth,p=max>0?Math.abs(rail.scrollLeft)/max:0;trk.style.width=(w*100)+'%';trk.style.transform=`translateX(${(L==='ar'?-1:1)*p*(1-w)/w*100}%)`};
@@ -993,52 +1256,47 @@ function bindProduct(id){const z=document.getElementById('zoom');if(z){const img
 function aboutHTML(){return `<section class="phead"><div class="wrap"><div class="crumb"><a href="#home">${t('home')}</a>${CHEV}<span>${t('nAbout')}</span></div><h1>${t('aboutT')}</h1></div></section>
 <section class="sec"><div class="wrap"><div class="ab">
   <div class="txt"><span class="kicker">${t('company')}</span>${[['building','aboutP1'],['box','aboutP2'],['factory','aboutP3']].map(x=>`<div class="ap"><span class="api">${I(x[0])}</span><p>${t(x[1])}</p></div>`).join('')}<div class="row" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:6px"><a class="btn btn-red" href="${CATALOG}" target="_blank" rel="noopener">${I('download')}${t('fCatalog')}</a><a class="btn btn-ghost" href="#products">${I('grid')}${t('browse')}</a></div></div>
-  <div class="imgf rv"><img src="about1.webp" alt=""><div class="stamp"><span class="api">${I('pin')}</span><div style="display:grid"><b>${t('jeddah')}</b><span>${t('hq')}</span></div></div></div>
+  <div class="imgf rvimg"><img src="about1.webp" alt=""><div class="stamp"><span class="api">${I('pin')}</span><div style="display:grid"><b>${t('jeddah')}</b><span>${t('hq')}</span></div></div></div>
 </div></div></section>
-<section class="sec" style="padding-top:0"><div class="wrap">
+<section class="sec" style="padding-top:0;padding-bottom:0"><div class="wrap">
   <div class="head"><div><span class="kicker">${t('solK')}</span><h2>${t('solT')}</h2></div><p class="lead">${t('solP')}</p></div>
   <div class="sectors">${SECT.map((s,i)=>`<div class="sector rv"><span class="icw"><img src="s${i+1}.svg" alt=""></span><b>${L==='ar'?s[0]:s[1]}</b></div>`).join('')}</div>
 </div></section>
-<section style="padding-bottom:40px"><div class="wrap"><div class="band"><div class="in">
-  <div class="pic"><img src="about2.webp" alt="" id="bandImg"></div>
-  <div style="display:grid;gap:20px;min-width:0"><span class="kicker k-dark">${t('madeK')}</span><h2>${t('madeT')}</h2><p class="lead">${t('madeP')}</p></div>
-</div></div></div></section>`}
-
+${ctaHTML()}`}
 /* ---------- Contact ---------- */
 const PH='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>';
-function contactHTML(){return `<section class="phead"><div class="wrap"><div class="crumb"><a href="#home">${t('home')}</a>${CHEV}<span>${t('nContact')}</span></div><h1>${t('contactT')}</h1></div></section>
-<div class="wrap"><div class="ct">
-  <div class="cards">
+function contactHTML(){const b0=BR[0];return `<section class="phead"><div class="wrap"><div class="crumb"><a href="#home">${t('home')}</a>${CHEV}<span>${t('nContact')}</span></div><h1>${t('contactT')}</h1></div></section>
+<section class="ct4"><div class="wrap">
+  <div class="cgrid">
     <div class="cc"><span class="icw">${PH}</span><div><span>${t('cs')}</span><b class="ltr num">920002480</b></div><button class="cp" data-cp="920002480">${t('copy')}</button></div>
     <div class="cc"><span class="icw"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></span><div><span>${t('wa')}</span><b class="ltr num">+966 55 508 1276</b></div><button class="cp" data-cp="+966555081276">${t('copy')}</button></div>
     <div class="cc"><span class="icw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span><div><span>${t('mail')}</span><b class="ltr">info@jawad.com.sa</b></div><button class="cp" data-cp="info@jawad.com.sa">${t('copy')}</button></div>
-    <div class="cc"><span class="icw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><span>${t('hours')}</span><div class="hrs"><div><b style="font-size:15px">${t('d1')}</b><em class="ltr num">08:00 – 16:00</em></div><div><b style="font-size:15px">${t('d2')}</b><em class="ltr num">08:00 – 15:00</em></div><div><b style="font-size:15px">${t('d3')}</b><em>${t('off')}</em></div></div></div></div>
-    <div class="map"><span class="pin"></span><span>${t('loc')}</span><b style="font-size:20px;font-weight:600">${t('jed')}</b><span class="ltr num">21.4974° N, 39.2303° E</span><a class="btn btn-white" style="justify-self:start;height:44px;margin-top:6px" href="https://www.google.com/maps?q=21.497365000621,39.230272793409" target="_blank" rel="noopener">${I('pin')}${t('openMap')}</a></div>
+    <div class="cc hr"><span class="icw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><div><span>${t('hours')}</span><div class="hrs"><div><b style="font-size:15px">${t('d1')}</b><em class="ltr num">08:00 – 16:00</em></div><div><b style="font-size:15px">${t('d2')}</b><em class="ltr num">08:00 – 15:00</em></div><div><b style="font-size:15px">${t('d3')}</b><em>${t('off')}</em></div></div></div></div>
   </div>
-  <form class="qf" id="qf" novalidate>
-    <h3>${t('fT')}</h3><p class="note">${t('fNote')}</p>
-    <div class="f"><label for="cn">${t('fName')}</label><span class="fw">${I('user')}<input id="cn" autocomplete="name"></span></div>
-    <div class="f"><label for="cco">${t('fCompany')}</label><span class="fw">${I('building')}<input id="cco" autocomplete="organization"></span></div>
-    <div class="f"><label for="ce">${t('fEmail')}</label><span class="fw">${I('mail')}<input id="ce" type="email" autocomplete="email"></span></div>
-    <div class="f"><label for="cph">${t('fPhone')}</label><span class="fw">${I('phone')}<input id="cph" type="tel" autocomplete="tel"></span></div>
-    <div class="f full"><label for="cm">${t('fMsg')}</label><span class="fw ta">${I('msg')}<textarea id="cm"></textarea></span></div>
-    <div><button class="btn btn-red" type="submit">${I('send')}${t('fSend')}</button></div>
-    <div class="out" id="cout" aria-live="polite"></div>
-  </form>
-</div></div>
-<section class="sec" id="branches" style="padding-bottom:0"><div class="wrap">
-  <div class="head"><div><span class="kicker">${t('branchesK')}</span><h2>${t('branchesT')}</h2></div><div class="legend"><span><i class="r" style="box-shadow:0 0 0 4px rgba(174,31,35,.2)"></i>${t('hqL')}</span><span><i class="r"></i>${t('whL')}</span><span><i></i>${t('salesL')}</span></div></div>
-  <div class="branches">
-    <div class="acc" id="acc">${BR.map((b,i)=>`<div class="item ${i===0?'open':''}" data-i="${i}"><button class="trg" aria-expanded="${i===0}"><span class="nm"><b>${esc(brN(b))}</b><span>${esc(brT(b))}</span></span><span class="pm2">${I('chev')}</span></button>
-      <div class="body"><div><div class="inner">${b.mail?`<a class="ltr" href="mailto:info@jawad.com.sa">${I('mail')}info@jawad.com.sa</a>`:''}<a class="ltr num" href="tel:920002480">${I('phone')}920002480</a><a href="${mapLink(b)}" target="_blank" rel="noopener">${I('pin')}${t('openMap')}</a></div></div></div></div>`).join('')}</div>
-    <div class="mapbox"><iframe id="gmap" title="${t('branchesT')}" src="${mapSrc(BR[0])}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="mcap"><span class="dot"></span><div><b id="mapT">${esc(brN(BR[0]))} — ${esc(brT(BR[0]))}</b><a id="mapL" href="${mapLink(BR[0])}" target="_blank" rel="noopener">${I('pin')}${t('openMap')}</a></div></div></div>
+  <div class="cmain">
+    <div class="brp" id="branches">
+      <div class="bh"><span class="kicker">${t('branchesK')}</span><h2>${t('branchesT')}</h2></div>
+      <div class="bchips" id="bchips">${BR.map((b,i)=>`<button class="bchip ${i===0?'on':''}" data-i="${i}" aria-pressed="${i===0}"><b>${esc(brN(b))}</b><span>${esc(brT(b))}</span></button>`).join('')}</div>
+      <div class="mapbox"><iframe id="gmap" title="${t('branchesT')}" src="${mapSrc(b0)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe><div class="mcap"><span class="dot"></span><div id="mcapI">${mcapHTML(b0)}</div></div></div>
+    </div>
+    <form class="qf" id="qf" novalidate>
+      <h3>${t('fT')}</h3><p class="note">${t('fNote')}</p>
+      <div class="f"><label for="cn">${t('fName')}</label><span class="fw">${I('user')}<input id="cn" autocomplete="name"></span></div>
+      <div class="f"><label for="cco">${t('fCompany')}</label><span class="fw">${I('building')}<input id="cco" autocomplete="organization"></span></div>
+      <div class="f"><label for="ce">${t('fEmail')}</label><span class="fw">${I('mail')}<input id="ce" type="email" autocomplete="email"></span></div>
+      <div class="f"><label for="cph">${t('fPhone')}</label><span class="fw">${I('phone')}<input id="cph" type="tel" autocomplete="tel"></span></div>
+      <div class="f full"><label for="cm">${t('fMsg')}</label><span class="fw ta">${I('msg')}<textarea id="cm"></textarea></span></div>
+      <div><button class="btn btn-red" type="submit">${I('send')}${t('fSend')}</button></div>
+      <div class="out" id="cout" aria-live="polite"></div>
+    </form>
   </div>
 </div></section>`}
+function mcapHTML(b){return `<b>${esc(brN(b))} — ${esc(brT(b))}</b><div class="mi">${b.mail?`<a class="ltr" href="mailto:info@jawad.com.sa">${I('mail')}info@jawad.com.sa</a>`:''}<a class="ltr num" href="tel:920002480">${I('phone')}920002480</a><a href="${mapLink(b)}" target="_blank" rel="noopener">${I('pin')}${t('openMap')}</a></div>`}
 function bindContact(){
   const gm=document.getElementById('gmap');
-  document.querySelectorAll('#acc .item').forEach(it=>it.querySelector('.trg').addEventListener('click',()=>{const was=it.classList.contains('open');
-    document.querySelectorAll('#acc .item').forEach(x=>{x.classList.remove('open');x.querySelector('.trg').setAttribute('aria-expanded','false')});
-    if(!was){it.classList.add('open');it.querySelector('.trg').setAttribute('aria-expanded','true');const b=BR[+it.dataset.i];gm.src=mapSrc(b);document.getElementById('mapT').textContent=brN(b)+' — '+brT(b);document.getElementById('mapL').href=mapLink(b)}}));
+  document.getElementById('bchips').addEventListener('click',e=>{const c=e.target.closest('.bchip');if(!c||c.classList.contains('on'))return;
+    document.querySelectorAll('.bchip').forEach(x=>{x.classList.toggle('on',x===c);x.setAttribute('aria-pressed',x===c)});
+    const b=BR[+c.dataset.i];gm.src=mapSrc(b);document.getElementById('mcapI').innerHTML=mcapHTML(b)});
   document.querySelectorAll('.cp').forEach(b=>b.onclick=async()=>{try{await navigator.clipboard.writeText(b.dataset.cp);b.textContent=t('copied');setTimeout(()=>b.textContent=t('copy'),1500)}catch(e){const s=b.parentElement.querySelector('b');const r=document.createRange();r.selectNodeContents(s);getSelection().removeAllRanges();getSelection().addRange(r)}});
   document.getElementById('qf').addEventListener('submit',e=>{e.preventDefault();const v=id=>document.getElementById(id).value.trim();const o=document.getElementById('cout');
     if(!v('cn')||!v('cm')){o.textContent=t('fNeed');return}
@@ -1083,19 +1341,29 @@ function rv(els,step=.09,base=0,wrap=6){els.forEach((el,i)=>{if(!el)return;el.cl
   el.addEventListener('transitionend',function done(ev){if(ev.target!==el||ev.propertyName!=='transform')return;el.removeEventListener('transitionend',done);el.classList.remove('rv','rv-on');el.style.removeProperty('--d')});
   if(rvIO)rvIO.observe(el);else el.classList.add('rv-on')})}
 const $$=q=>[...app.querySelectorAll(q)];let firstView=true;
-function countUp(b){const n=+b.dataset.n;if(reduce||!n){b.textContent=n;return}const t0=performance.now(),D=1600;
+function countUp(b){const n=+b.dataset.n;if(reduce||!n){b.textContent=n;return}const t0=performance.now(),D=2200;
   const f=now=>{const k=Math.min(1,(now-t0)/D);b.textContent=Math.round(n*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+/* headings: every word rises out of its own mask */
+function splitWords(h){if(h.dataset.sp)return;h.dataset.sp=1;let k=0;
+  const walk=n=>{[...n.childNodes].forEach(c=>{if(c.nodeType===3){const parts=c.textContent.split(/(\s+)/);if(parts.length<1)return;const f=document.createDocumentFragment();
+      parts.forEach(p=>{if(!p)return;if(/^\s+$/.test(p)){f.append(p);return}const o=document.createElement('span');o.className='wd';const i=document.createElement('span');i.textContent=p;i.style.setProperty('--i',k++);o.append(i);f.append(o)});c.replaceWith(f)}
+    else if(c.nodeType===1&&c.tagName!=='SVG'&&c.tagName!=='svg')walk(c)})};walk(h)}
+const spIO=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){spIO.unobserve(e.target);e.target.classList.add('sp-on')}}),{rootMargin:'0px 0px -8% 0px'}):null;
 function motion(r){
   /* on the very first visit the hero waits for the logo curtain to lift, so its entrance is actually seen */
-  if(r==='home')rv([...$$('.hero-top .kicker'),...$$('.hero-top h1'),...$$('.hero-top .lead'),...$$('.hero-top .row'),...$$('.slider')],.14,firstView?Math.max(.1,1.45-performance.now()/1000):.1,9);
+  const base=firstView?Math.max(.1,1.75-performance.now()/1000):.35;
+  if(r==='home')rv([...$$('.hero-top .kicker'),...$$('.hero-top h1'),...$$('.hero-top .lead'),...$$('.hero-top .ht-b .btn'),...$$('.slider')],.14,base,9);
   firstView=false;
-  $$('.phead .wrap').forEach(w=>rv([...w.children],.1,.05));
+  $$('.phead .wrap').forEach(w=>rv([...w.children],.12,base));
+  if(spIO)$$('.hero-top h1, .phead h1, .head h2, .made4 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
+  if(r==='home')fitHero();
   $$('.head').forEach(h=>rv([h],0));
-  ['.bento','.mats','.mats3','.acc','#rail','.sectors','.stats','.ab','.ct','.pgrid','.pd','.pnav','.cta','.cta3','.band .in'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')))));
+  ['.bento','.mats3','#rail','.sectors','.ab .txt','.cgrid','.bchips','.pgrid','.pd','.pnav','.cta3 .in','.made4 .mt','.feats3','.mstats','.cmain'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')&&!c.classList.contains('rvimg')),.1)));
   rv($$('.rv:not(.rv-on)').filter(e=>!e.style.getPropertyValue('--d')));
+  $$('.rvimg').forEach(el=>{if(rvIO)rvIO.observe(el);else el.classList.add('rv-on')});
   if(r==='product')rv($$('#zoom'),0);
   const sio=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){sio.unobserve(e.target);countUp(e.target)}}),{threshold:.6}):null;
-  $$('.stats b[data-n]').forEach(b=>{if(sio){b.textContent='0';sio.observe(b)}else b.textContent=b.dataset.n});
+  $$('.mstats b[data-n]').forEach(b=>{if(sio&&!reduce){b.textContent='0';sio.observe(b)}else b.textContent=b.dataset.n});
 }
 
 /* ---------- Boot ---------- */
