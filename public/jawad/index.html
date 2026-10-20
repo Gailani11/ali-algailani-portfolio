@@ -126,10 +126,10 @@ html[dir=ltr] .drawer{transform:translateX(-100%)}
 .hero-top .ht-a{display:grid;gap:18px;min-width:0}
 .hero-top h1{white-space:nowrap;font-size:clamp(34px,5.4vw,84px);font-weight:700;line-height:1.05;letter-spacing:-.02em;color:var(--ink)}
 html[lang=ar] .hero-top h1{line-height:1.18;letter-spacing:0}
-.hero-top h1 em{font-style:normal;color:#fff;background:var(--red);display:inline-block;padding:.04em .22em .12em;margin-block:.14em .02em;border-radius:.16em;line-height:1.12}
+.hero-top h1 em{font-style:normal;color:var(--red)}
 .hero-top .ht-b{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px 40px;min-width:0}
 .hero-top .ht-b .lead{max-width:620px;margin:0;text-wrap:pretty}
-.hero-top h1.wrap{white-space:normal;text-wrap:balance}
+.hero-top h1.two{white-space:normal;text-wrap:balance}
 .hero-top .row{display:flex;gap:12px;flex-wrap:wrap}
 .slider{position:relative;border-radius:30px;overflow:hidden;background:var(--ink-2);aspect-ratio:3/1;min-height:380px;isolation:isolate}
 .cap{position:absolute;z-index:6;inset-inline-start:clamp(16px,2.4vw,30px);bottom:clamp(16px,2.4vw,30px);display:grid;gap:4px;max-width:min(440px,60%);padding:18px 22px 18px;border-radius:22px;background:rgba(18,16,16,.58);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);color:#fff;border:1px solid rgba(255,255,255,.12);transition:background .3s}
@@ -791,12 +791,12 @@ function homeHTML(){
 </div></div></section>`}
 /* hero title on one line: shrink to fit the width; on narrow phones where one line would be too small, let it wrap */
 function fitHero(){const h=document.querySelector('.hero-top h1');if(!h)return;
-  h.classList.remove('wrap');h.style.fontSize='';const max=parseFloat(getComputedStyle(h).fontSize);
+  h.classList.remove('two');h.style.fontSize='';const max=parseFloat(getComputedStyle(h).fontSize);
   const avail=h.parentElement.clientWidth;const r=document.createRange();r.selectNodeContents(h);const w=r.getBoundingClientRect().width;
   const fs=Math.min(84,max*(innerWidth<1100?1.4:1),max*avail/w*.985);
   if(fs>=(L==='ar'?28:30)){h.style.fontSize=fs.toFixed(2)+'px';return}
   /* phones: two balanced lines, as large as fits */
-  h.classList.add('wrap');const lines=()=>{const t=new Set();for(const q of r.getClientRects())if(q.width>1)t.add(Math.round(q.top/4));return t.size};
+  h.classList.add('two');const lines=()=>{const t=new Set();for(const q of r.getClientRects())if(q.width>1)t.add(Math.round(q.top/4));return t.size};
   let f=42;h.style.fontSize=f+'px';r.selectNodeContents(h);while(f>28&&lines()>2){f-=1;h.style.fontSize=f+'px';r.selectNodeContents(h)}
   if(lines()>2)h.style.fontSize='34px'}
 addEventListener('resize',()=>{if(route==='home')fitHero()});
