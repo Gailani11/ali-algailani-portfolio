@@ -983,6 +983,36 @@ html[dir=rtl] .sgo svg{transform:scaleX(-1)}
 .mat3 .disc img{position:absolute;inset:13%;width:74%;height:74%;object-fit:contain}
 .stage .sctl{top:auto;right:auto;inset-inline-end:auto;inset-inline-start:auto;left:50%;height:auto}
 @media (max-width:640px){.scap{min-height:0}.scap b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-height:0;-webkit-line-clamp:unset}}
+
+/* =====================================================================================
+   v7 — quiet slider controls: thin progress lines at the bottom centre of the photo,
+   arrows only at the photo's sides on hover (desktop); phones swipe
+   ===================================================================================== */
+.stage .sctl{position:static;transform:none;background:none;box-shadow:none;padding:0;border-radius:0;display:contents}
+.stage .sctl .counter{display:none!important}
+.stage .sctl .ic{position:absolute;z-index:6;top:50%;width:48px;height:48px;margin-top:-24px;border:0;border-radius:50%;background:rgba(255,255,255,.92);color:var(--ink);box-shadow:0 10px 26px -12px rgba(0,0,0,.45);opacity:0;transition:opacity .4s,transform .45s var(--ease),background .3s,color .3s}
+.stage #hPrev{inset-inline-start:20px;transform:translateX(var(--nx,-10px))}
+.stage #hNext{inset-inline-end:20px;transform:translateX(var(--px,10px))}
+html[dir=rtl] .stage #hPrev{--nx:10px}html[dir=rtl] .stage #hNext{--px:-10px}
+@media (hover:hover){
+  .stage:hover .sctl .ic{opacity:1}
+  .stage:hover #hPrev,.stage:hover #hNext{transform:none}
+  .stage .sctl .ic:hover{background:var(--red);color:#fff}
+}
+@media (hover:none){.stage .sctl .ic{display:none}}
+.stage .sctl .sbars{display:flex!important;position:absolute;z-index:6;left:50%;bottom:clamp(14px,1.8vw,26px);transform:translateX(-50%);gap:8px;filter:drop-shadow(0 1px 4px rgba(0,0,0,.35))}
+.stage .sctl .sbars button{width:28px;height:22px;display:grid;align-items:center;padding:0;transition:width .5s var(--ease)}
+.stage .sctl .sbars button.on{width:56px}
+.stage .sctl .sbars i{height:3px;border-radius:3px;background:rgba(255,255,255,.55)}
+.stage .sctl .sbars button.done i b{transform:scaleX(0)}
+.stage .sctl .sbars button.on i b{animation:fillbar 7s linear forwards}
+@media (max-width:640px){
+  .stage .sctl .sbars{bottom:8px;gap:6px}
+  .stage .sctl .sbars button{width:16px;height:18px}
+  .stage .sctl .sbars button.on{width:32px}
+  .stage .sctl .sbars i{height:2.5px}
+}
+.stage .sctl .ic:focus-visible{opacity:1;transform:none}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
@@ -1277,7 +1307,12 @@ function bindHome(){fitHero();document.fonts&&document.fonts.ready.then(fitHero)
   document.getElementById('hPrev').onclick=()=>{show(i-1);restart()};document.getElementById('hNext').onclick=()=>{show(i+1);restart()};
   bars.forEach((b,k)=>b.addEventListener('click',()=>{show(k);restart()}));
   const restart=()=>{clearInterval(slideTimer);if(!reduce)slideTimer=setInterval(()=>show(i+1),7000)};restart();
-  sl.forEach((s,k)=>s.addEventListener('click',()=>location.hash=slideInfo(SLIDES[k]).href.slice(1)));
+  /* phones: swipe the photo to change slides (forward = towards the reading direction) */
+  let tx=0,ty=0,swiped=false;const stg=document.getElementById('stage');
+  stg.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  stg.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3){const fwd=L==='ar'?dx>0:dx<0;show(i+(fwd?1:-1));restart();swiped=true;setTimeout(()=>swiped=false,450)}},{passive:true});
+  sl.forEach((s,k)=>s.addEventListener('click',()=>{if(!swiped)location.hash=slideInfo(SLIDES[k]).href.slice(1)}));
   // rail
   const rail=document.getElementById('rail'),trk=document.getElementById('trk');
   const upd=()=>{const max=rail.scrollWidth-rail.clientWidth,w=rail.clientWidth/rail.scrollWidth,p=max>0?Math.abs(rail.scrollLeft)/max:0;trk.style.width=(w*100)+'%';trk.style.transform=`translateX(${(L==='ar'?-1:1)*p*(1-w)/w*100}%)`};
