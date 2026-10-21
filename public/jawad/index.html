@@ -851,6 +851,108 @@ footer{margin-top:0}
 .fg ul a.fi2{display:flex}
 .topbar a{color:inherit}
 @media (hover:hover){.topbar a:hover{color:#fff}}
+
+/* =====================================================================================
+   v5 — banners at their own proportions, fixed caption layout, white materials discs,
+   white "made locally" section, catalogue buttons, contact card hover
+   ===================================================================================== */
+
+/* ---------- hero banner: the stage has the photos' own proportions, so nothing is cropped or padded ---------- */
+.stage{aspect-ratio:3870/1626}
+@media (max-width:960px){.stage{aspect-ratio:3870/1626}}
+@media (max-width:640px){.stage{aspect-ratio:3870/1626}}
+.stage .slide .im{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%;transform:scale(1.035)}
+.stage .slide.on .im{transform:scale(1)}
+
+/* caption bar: text | shop button | controls — the button and the controls never move between slides */
+.sbar{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:14px 28px;flex-wrap:nowrap}
+.scap{display:grid;gap:2px;min-width:0;color:#fff}
+.scap .sk{font-size:12.5px;color:rgba(255,255,255,.6)}
+.scap b,.scap .sn{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.scap b{font-size:clamp(18px,1.6vw,24px);font-weight:600;line-height:1.35}
+.scap .sn{font-size:13.5px;color:rgba(255,255,255,.72);line-height:1.6}
+.sgo{display:inline-flex;align-items:center;gap:8px;height:46px;padding-inline:20px;border-radius:999px;background:#fff;color:var(--ink);font-size:14.5px;font-weight:500;white-space:nowrap;transition:background .35s,color .35s,transform .4s var(--ease)}
+.sgo svg{width:16px;height:16px;transition:transform .4s var(--ease)}
+html[dir=rtl] .sgo svg{transform:scaleX(-1)}
+@media (hover:hover){.sgo:hover{background:var(--red);color:#fff}.sgo:hover svg{transform:translateX(4px)}html[dir=rtl] .sgo:hover svg{transform:scaleX(-1) translateX(4px)}}
+.sctl{position:static}
+@media (max-width:1180px){.sbars{display:none}}
+@media (max-width:820px){
+  .sbar{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"cap ctl" "go go";padding:18px 18px 18px;gap:14px 14px}
+  .scap{grid-area:cap}.sctl{grid-area:ctl;position:static;gap:8px}.sgo{grid-area:go;justify-self:start;height:44px;padding-inline:18px}
+  .scap .st,.scap{padding-inline-end:0}
+  .sctl .ic{width:40px;height:40px}
+  .sctl .counter{display:none}
+}
+
+/* ---------- shop by material: white discs, products on white, nothing jumps apart on hover ---------- */
+.mat3 .disc{background:#fff;transition:transform .55s var(--ease),box-shadow .55s var(--ease)}
+.mat3 .disc img{width:74%;height:74%}
+@media (hover:hover){
+  .mat3:hover .disc{background:#fff;transform:scale(1.08);box-shadow:0 0 0 1px var(--line),0 16px 30px -16px rgba(0,0,0,.35)}
+  .mat3:hover .grid4 span{background:var(--red);transform:none!important}
+  .mat3:hover .grid4 span:nth-child(2),.mat3:hover .grid4 span:nth-child(3){background:var(--ink)}
+  .mat3:hover .grid4{transform:scale(1.14)}
+}
+.mat3 .grid4{transition:transform .6s var(--ease)}
+
+/* ---------- made locally: light section, photo without overlay, short copy, prominent numbers ---------- */
+.made5{padding-block:clamp(24px,3vw,40px) clamp(64px,8vw,120px)}
+.made5 .m5{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(30px,5vw,90px);align-items:center}
+.made5 .m5t{display:grid;gap:20px;align-content:center;min-width:0}
+.made5 h2{font-size:clamp(32px,4vw,60px);line-height:1.15}
+.made5 h2 > span:not(.wd){display:block;color:var(--red)}
+.made5 .lead{max-width:560px}
+.made5 .mf{display:grid;gap:12px;margin-top:4px}
+.made5 .mf div{display:flex;align-items:center;gap:14px;font-weight:500;font-size:15.5px;line-height:1.5}
+.made5 .mf .fi{width:44px;height:44px;border-radius:50%;background:var(--red-wash);color:var(--red);display:grid;place-items:center;flex:none}
+.made5 .mf .fi svg{width:21px;height:21px}
+.made5 .m5p{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:1448/1086;background:var(--stone)}
+.made5 .m5p img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.m5s{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:clamp(36px,4.4vw,64px)}
+.m5s > div{display:grid;justify-items:start;gap:14px;padding:clamp(20px,2.2vw,32px);border-radius:24px;background:var(--stone);transition:transform .5s var(--ease),background .4s;min-width:0}
+@media (hover:hover){.m5s > div:hover{transform:translateY(-6px);background:var(--blush)}}
+.m5s .si{width:clamp(48px,4vw,60px);height:clamp(48px,4vw,60px);border-radius:50%;background:var(--red);display:grid;place-items:center}
+.m5s .si svg{width:46%;height:46%;color:#fff}
+.m5s b{font-size:clamp(42px,5vw,80px);font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.m5s .sl{color:var(--mute);font-size:clamp(14px,1.1vw,16.5px);margin-top:-4px}
+.made5 + .cta3{margin-top:0}
+@media (max-width:960px){
+  .made5 .m5{grid-template-columns:minmax(0,1fr)}
+  .made5 .m5p{order:-1}
+}
+@media (max-width:700px){.m5s{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){
+  .made5 .m5p{border-radius:22px}
+  .m5s{gap:10px}
+  .m5s > div{border-radius:18px;padding:18px 16px;gap:10px}
+  .made5 .mf div{font-size:14.5px}
+}
+
+/* ---------- catalogue band buttons: both outlined, white on hover (never the band's own red) ---------- */
+.cta3 .btn-line-w{border-color:rgba(255,255,255,.6);color:#fff;background:transparent}
+.cta3 .btn-line-w:hover{background:#fff;color:var(--ink);border-color:#fff}
+
+/* ---------- contact cards and branch buttons share one hover ---------- */
+.ct4 .cc,.bchip{transition:transform .5s var(--ease),border-color .35s,box-shadow .5s var(--ease),background .35s,color .35s}
+.ct4 .cc .icw{transition:background .35s,color .35s}
+@media (hover:hover){
+  .ct4 .cc:hover,.bchip:hover{transform:translateY(-4px) scale(1.015);border-color:var(--red);box-shadow:0 22px 40px -30px rgba(174,31,35,.55)}
+  .ct4 .cc:hover .icw{background:var(--red);color:#fff}
+}
+.ct4 .cc:active,.bchip:active{transform:scale(.985)}
+@media (max-width:640px){
+  .scap b{white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;line-height:1.35;min-height:2.7em;font-size:19px}
+}
+
+/* the item count is always shown in full; only the list of sub-groups is shortened */
+.scap .sn{display:flex;align-items:baseline;gap:6px;overflow:visible;text-overflow:clip}
+.scap .sn .ss{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scap .sn i{font-style:normal;flex:none}
+.scap .sn .sc{flex:none;white-space:nowrap}
+.scap{grid-template-columns:minmax(0,1fr)}
+.scap > *{min-width:0;max-width:100%}
+@media (max-width:640px){.scap b{min-height:0}.scap{min-height:102px;align-content:start}}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
@@ -954,7 +1056,7 @@ const I=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" fill="none" stroke="c
 const CATALOG='Jawad-Catalogue.pdf';
 const WA='966555081276';
 const TAGS=[{id:6,ar:'ألمنيوم',en:'Aluminium'},{id:5,ar:'ورق',en:'Paper'},{id:10,ar:'بلاستيك',en:'Plastic'},{id:7,ar:'باغاس',en:'Bagasse'},{id:11,ar:'خشب',en:'Wood'},{id:9,ar:'لداري',en:'LeDari'},{id:8,ar:'كنان',en:'KENAN'}];
-const SLIDES=[{img:'ban3.webp',bg:'ban3-bg.webp',t:10,w:3810,h:800,b:[.075,.975,.0,1]},{img:'ban1.webp',bg:'ban1-bg.webp',c:127,w:3870,h:1624,b:[.15,.86,.24,.77]},{img:'ban4.webp',bg:'ban4-bg.webp',t:7,w:3810,h:800,b:[.035,.995,.0,.985]},{img:'ban2.webp',bg:'ban2-bg.webp',c:142,w:4342,h:1448,b:[.24,.77,.23,.80]}];
+const SLIDES=[{img:'ban3.webp',t:10},{img:'ban1.webp',c:127},{img:'ban4.webp',t:7},{img:'ban2.webp',c:142}];
 const FEAT=[[144,[1748,1540,1962]],[146,[1068,1072]],[130,[2053,1131]],[178,[1458,2041]],[131,[1806,1952]]];
 const SECT=[['المطاعم','Restaurants'],['المقاهي','Cafés'],['المخابز','Bakeries'],['التموين','Catering'],['الفنادق','Hotels'],['متاجر الأغذية','Grocery Retailers']];
 /* branches exactly as listed on jawad.com.sa/contact-us (names, types, map points) */
@@ -972,7 +1074,7 @@ const T={
 ar:{hoursLine:'السبت – الأربعاء ٨:٠٠–١٦:٠٠ · الخميس ٨:٠٠–١٥:٠٠',hoursShort:'السبت – الخميس، من ٨ صباحًا',open:'مفتوح الآن',closed:'مغلق الآن',nHome:'الرئيسية',nProducts:'المنتجات',nAbout:'من نحن',nContact:'اتصل بنا',
 company:'مؤسسة عبدالقادر جيلاني التجارية',heroT:'حلول التغليف <em>المتخصصة</em>',heroP:'تصنيع وتوريد وتوزيع مستلزمات تغليف الأطعمة في المملكة العربية السعودية، من مقرنا الرئيسي في جدة.',browse:'تصفح المنتجات',fCatalog:'تحميل كتالوج جواد',shopThis:'تسوّق هذه المجموعة',featured:'مجموعة',featK:'تشكيلات مختارة',featT:'أبرز التصنيفات',catShort:'الكتالوج',prevP:'المنتج السابق',nextP:'المنتج التالي',matOf:'منتجات',
 byMat:'تسوّق حسب الخامة',all:'الكل',items:'منتج',latest:'أحدث المنتجات',latestK:'وصل حديثًا',viewAll:'عرض كل المنتجات',
-madeK:'نصنع محليًا',madeT:'نصنع محليًا <span>ونستورد عالميًا</span>',madeP:'جزء من منتجاتنا يُصنع بفخر في مصانعنا الحديثة في جدة. إلى جانب منتجاتنا المحلية، نقدم منتجات مستوردة مختارة بعناية من شركاء عالميين موثوقين. يتيح لنا هذا النهج الهجين تقديم حلول متنوعة ومتكاملة تلبي احتياجات عملائنا بدقة واحترافية.',
+madeK:'نصنع محليًا',madeT:'نصنع محليًا <span>ونستورد عالميًا</span>',madeS:'نجمع بين التصنيع في مصانعنا بجدة ومنتجات مختارة من شركاء عالميين موثوقين، لنقدّم لعملائنا حلولًا متكاملة.',madeP:'جزء من منتجاتنا يُصنع بفخر في مصانعنا الحديثة في جدة. إلى جانب منتجاتنا المحلية، نقدم منتجات مستوردة مختارة بعناية من شركاء عالميين موثوقين. يتيح لنا هذا النهج الهجين تقديم حلول متنوعة ومتكاملة تلبي احتياجات عملائنا بدقة واحترافية.',
 f1:'مصانعنا في جدة',f2:'منتجات مستوردة من شركاء عالميين موثوقين',f3:'شبكة فروع وتوزيع تخدم المدن الرئيسية',stP:'منتج',stC:'تصنيف',stM:'خامات وعلامات',stS:'قطاعات نخدمها',solK:'من نخدم',solT:'حلول التغليف المتخصصة',solP:'نقدم مجموعة متكاملة من حلول التغليف تشمل الورق والبلاستيك والألومنيوم ومستلزمات تغليف الأغذية ذات الاستخدام الواحد، بجودة عالية وأسعار تنافسية تناسب مختلف القطاعات.',
 brandsK:'علاماتنا التجارية',ctaT:'الكتالوج الكامل بين يديك',ctaP:'حمّل كتالوج جواد وتصفح جميع المنتجات بالمقاسات والأكواد، أو تواصل معنا مباشرة.',
 cats:'التصنيفات',search:'ابحث عن منتج، رمز، أو مجموعة...',searchS:'ابحث عن منتج أو رمز...',showing:'عرض',of:'من',noRes:'لا توجد منتجات مطابقة لبحثك.',allCats:'كل التصنيفات',
@@ -984,7 +1086,7 @@ fExplore:'استكشف',fQuick:'روابط سريعة',locL:'الموقع:',call
 en:{hoursLine:'Sat – Wed 8:00–16:00 · Thu 8:00–15:00',hoursShort:'Sat – Thu, from 8 am',open:'Open now',closed:'Closed now',nHome:'Home',nProducts:'Products',nAbout:'About us',nContact:'Contact us',
 company:'Abdulqader Jilani Trading Est.',heroT:'Specialized <em>Packaging</em> Solutions',heroP:'Manufacturing, supply and distribution of food packaging across the Kingdom of Saudi Arabia, headquartered in Jeddah.',browse:'Browse products',fCatalog:'Download Jawad catalog',shopThis:'Shop this collection',featured:'Collection',featK:'Featured',featT:'Top categories',catShort:'Catalog',prevP:'Previous product',nextP:'Next product',matOf:'Products',
 byMat:'Shop by material',all:'All',items:'products',latest:'Latest Products',latestK:'New arrivals',viewAll:'View all products',
-madeK:'Made in Jeddah',madeT:'Locally Manufactured, <span>Globally Sourced</span>',madeP:'Part of our product range is proudly manufactured in our state-of-the-art factories right here in Jeddah. Alongside our locally produced items, we offer carefully selected imported products from trusted global partners. This hybrid approach allows us to provide our customers with diverse, end-to-end solutions that meet their precise needs efficiently and professionally.',
+madeK:'Made in Jeddah',madeT:'Locally Manufactured, <span>Globally Sourced</span>',madeS:'We combine manufacturing in our Jeddah factories with selected products from trusted global partners to offer complete solutions.',madeP:'Part of our product range is proudly manufactured in our state-of-the-art factories right here in Jeddah. Alongside our locally produced items, we offer carefully selected imported products from trusted global partners. This hybrid approach allows us to provide our customers with diverse, end-to-end solutions that meet their precise needs efficiently and professionally.',
 f1:'Our factories in Jeddah',f2:'Imports from trusted global partners',f3:'Branches and distribution serving major cities',stP:'products',stC:'categories',stM:'materials & lines',stS:'sectors served',solK:'Who we serve',solT:'Specialized Packaging Solutions',solP:'We offer a comprehensive range of packaging solutions including paper, plastic, aluminum, and disposable food packaging products, delivered with reliable quality and competitive prices tailored for various sectors.',
 brandsK:'Our brands',ctaT:'The full catalog in your hands',ctaP:'Download the Jawad catalog to browse every product with sizes and codes, or contact us directly.',
 cats:'Categories',search:'Search for a product, code or group...',searchS:'Search product or code...',showing:'Showing',of:'of',noRes:'No products match your search.',allCats:'All categories',
@@ -1009,7 +1111,7 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 /* ---------- Data + images ---------- */
 let D=null,IDX=null,P={},CAT={};
 function setImg(el){const id=el.dataset.pid,tn=el.dataset.tint||'';if(!id)return;
-  const src=window.__IMG?window.__IMG[tn+id]:(tn?'img/b/':'img/')+id+'.webp';if(!src)return;
+  const src=window.__IMG?window.__IMG[tn+id]:(tn?'img/'+tn+'/':'img/')+id+'.webp';if(!src)return;
   el.decoding='async';el.onload=()=>el.classList.add('ld');el.src=src;if(el.complete&&el.naturalWidth)el.classList.add('ld')}
 const io=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){io.unobserve(e.target);setImg(e.target)}}),{rootMargin:'600px'}):null;
 function hydrate(root){root.querySelectorAll('img[data-pid]:not([src])').forEach(el=>io?io.observe(el):setImg(el))}
@@ -1069,7 +1171,7 @@ function slideInfo(s){if(s.t){const g=TAGS.find(x=>x.id===s.t);const cnt={};D.p.
   return{title:L==='ar'?t('matOf')+' '+tagN(g):tagN(g)+' '+t('matOf'),sub:top.join(L==='ar'?'، ':', '),n:D.p.filter(p=>p.g.includes(s.t)).length,href:'#products-t'+s.t}}
   const subs=[...new Set(D.p.filter(p=>p.c===s.c).map(p=>sub(p)))].filter(x=>x&&x!==catN(s.c)).slice(0,3);
   return{title:catN(s.c),sub:subs.join(L==='ar'?'، ':', '),n:CAT[s.c]?.n||0,href:'#products-c'+s.c}}
-function capHTML(i){const x=slideInfo(SLIDES[i]);return `<a class="scap" id="cap" href="${x.href}"><span class="st"><span class="sk">${t('featured')} <span class="num ltr">${String(i+1).padStart(2,'0')}</span></span><b>${esc(x.title)}</b><span class="sn">${x.sub?esc(x.sub)+' · ':''}<span class="num">${x.n}</span> ${t('items')}</span></span><span class="sgo">${t('shopThis')}${ARR}</span></a>`}
+function capHTML(i){const x=slideInfo(SLIDES[i]);return `<a class="scap" id="cap" href="${x.href}"><span class="sk">${t('featured')} <span class="num ltr">${String(i+1).padStart(2,'0')}</span></span><b>${esc(x.title)}</b><span class="sn">${x.sub?`<span class="ss">${esc(x.sub)}</span><i>·</i>`:''}<span class="sc"><span class="num">${x.n}</span> ${t('items')}</span></span></a>`}
 function homeHTML(){
   const tagCount=id=>D.p.filter(p=>p.g.includes(id)).length;
   return `
@@ -1079,8 +1181,8 @@ function homeHTML(){
     <div class="ht-b"><p class="lead">${t('heroP')}</p><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a></div>
   </div>
   <div class="slider" id="slider">
-    <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="sbg" src="${s.bg}" alt=""><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}</div>
-    <div class="sbar">${capHTML(0)}
+    <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}</div>
+    <div class="sbar">${capHTML(0)}<a class="sgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a>
       <div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div>
     </div>
   </div>
@@ -1095,7 +1197,7 @@ function homeHTML(){
   <div class="head"><div><span class="kicker">${t('nProducts')}</span><h2>${t('byMat')}</h2></div><a class="btn btn-line-w" href="#products">${t('viewAll')}${ARR}</a></div>
   <div class="mats3">
     <a class="mat3" href="#products"><div class="disc"><div class="grid4"><span></span><span></span><span></span><span></span></div></div><b>${t('all')}</b><small class="num">${D.p.length} ${t('items')}</small></a>
-    ${TAGS.map(g=>`<a class="mat3" href="#products-t${g.id}"><div class="disc"><img data-pid="${IDX.tagRep[g.id]}" alt=""></div><b>${tagN(g)}</b><small class="num">${tagCount(g.id)} ${t('items')}</small></a>`).join('')}
+    ${TAGS.map(g=>`<a class="mat3" href="#products-t${g.id}"><div class="disc"><img data-pid="${IDX.tagRep[g.id]}" data-tint="w" alt=""></div><b>${tagN(g)}</b><small class="num">${tagCount(g.id)} ${t('items')}</small></a>`).join('')}
   </div>
 </div></section>
 
@@ -1112,18 +1214,17 @@ function homeHTML(){
 
 ${madeHTML()}
 ${ctaHTML()}`}
-function madeHTML(){return `<section class="made4" style="margin-top:0"><div class="wrap">
-  <div class="in">
-    <div class="mt"><span class="kicker">${t('madeK')}</span><h2>${t('madeT')}</h2><p class="lead">${t('madeP')}</p>
-      <div class="feats3">${[['factory','f1'],['globe','f2'],['truck','f3']].map(f=>`<div><span class="fi">${I(f[0])}</span><span>${t(f[1])}</span></div>`).join('')}</div>
-      <div class="row"><a class="btn btn-red" href="#about">${I('info')}${t('nAbout')}</a><a class="btn btn-line-w" href="#branches">${I('pin')}${t('branchesT')}</a></div></div>
-    <div class="mp rvimg"><img src="about2.webp" alt=""></div>
+function madeHTML(){return `<section class="made5"><div class="wrap">
+  <div class="m5">
+    <div class="m5t"><span class="kicker">${t('madeK')}</span><h2>${t('madeT')}</h2><p class="lead">${t('madeS')}</p>
+      <div class="mf">${[['factory','f1'],['globe','f2'],['truck','f3']].map(f=>`<div><span class="fi">${I(f[0])}</span><span>${t(f[1])}</span></div>`).join('')}</div></div>
+    <div class="m5p rvimg"><img src="about2.webp" alt=""></div>
   </div>
-  <div class="mstats">${[['box',D.p.length,'stP'],['layers',D.cats.length,'stC'],['leaf',7,'stM'],['store',6,'stS']].map(x=>`<div><span class="si">${I(x[0])}</span><div class="sv"><b class="num ltr" data-n="${x[1]}">${x[1]}</b><span class="sl">${t(x[2])}</span></div></div>`).join('')}</div>
+  <div class="m5s">${[['box',D.p.length,'stP'],['layers',D.cats.length,'stC'],['leaf',7,'stM'],['store',6,'stS']].map(x=>`<div><span class="si">${I(x[0])}</span><b class="num ltr" data-n="${x[1]}">${x[1]}</b><span class="sl">${t(x[2])}</span></div>`).join('')}</div>
 </div></section>`}
 function ctaHTML(){return `<section class="cta3"><div class="wrap"><div class="in">
   <div style="display:grid;gap:16px;min-width:0"><span class="kicker" style="color:#fff;opacity:.85">${t('catShort')}</span><h2>${t('ctaT')}</h2><p>${t('ctaP')}</p>
-  <div class="row"><a class="btn btn-white" href="${CATALOG}" target="_blank" rel="noopener">${I('download')}${t('fCatalog')}</a><a class="btn btn-line-w" href="#contact">${I('phone')}${t('nContact')}</a></div></div>
+  <div class="row"><a class="btn btn-line-w" href="${CATALOG}" target="_blank" rel="noopener">${I('download')}${t('fCatalog')}</a><a class="btn btn-line-w" href="#contact">${I('phone')}${t('nContact')}</a></div></div>
   <a class="cover" href="${CATALOG}" target="_blank" rel="noopener" aria-label="${t('fCatalog')}"><img src="cat-cover.webp" alt="${t('fCatalog')}"></a>
 </div></div></section>`}
 function fitHero(){const h=document.querySelector('.hero-top h1');if(!h)return;
@@ -1136,23 +1237,12 @@ function fitHero(){const h=document.querySelector('.hero-top h1');if(!h)return;
   let f=42;h.style.fontSize=f+'px';r.selectNodeContents(h);while(f>28&&lines()>2){f-=1;h.style.fontSize=f+'px';r.selectNodeContents(h)}
   if(lines()>2)h.style.fontSize='34px'}
 addEventListener('resize',()=>{if(route==='home')fitHero()});
-function fitSlides(){const st=document.getElementById('stage');if(!st)return;const W=st.clientWidth,H=st.clientHeight;if(!W||!H)return;
-  st.querySelectorAll('.slide').forEach((el,k)=>{const S=SLIDES[k],im=el.querySelector('.im'),[x0,x1,y0,y1]=S.b;
-    const pad=W<700?.012:.035,bw=Math.min(1,x1-x0+pad*2),bh=Math.min(1,y1-y0+pad*2),cx=(x0+x1)/2,cy=(y0+y1)/2;
-    const s=Math.min(Math.max(W/S.w,H/S.h),W/(bw*S.w),H/(bh*S.h)),dw=S.w*s,dh=S.h*s;
-    const pos=(V,d,c)=>{let p=V/2-c*d;if(d>=V)p=Math.min(0,Math.max(V-d,p));else p=Math.max(0,Math.min(V-d,p));return p};
-    const l=pos(W,dw,cx),tp=pos(H,dh,cy);
-    Object.assign(im.style,{left:l+'px',top:tp+'px',width:dw+'px',height:dh+'px'});
-    im.style.setProperty('--ox',((W/2-l)/dw*100).toFixed(1)+'%');im.style.setProperty('--oy',((H/2-tp)/dh*100).toFixed(1)+'%');
-    im.classList.toggle('fx',dw<W-1);im.classList.toggle('fy',dh<H-1)})}
-addEventListener('resize',()=>{if(route==='home')fitSlides()});
 function bindHome(){fitHero();document.fonts&&document.fonts.ready.then(fitHero);
   // slider: each photo is scaled so the products are always fully visible; any leftover area shows a soft blur of the same photo
   const sl=[...document.querySelectorAll('.stage .slide')],bars=[...document.querySelectorAll('#bars button')],cnt=document.getElementById('cnt');let i=0;
-  fitSlides();
   const show=n=>{if(n===i)return;const prev=sl[i];prev.classList.remove('on');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
     i=(n+sl.length)%sl.length;sl[i].classList.add('on');bars.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});cnt.textContent=String(i+1).padStart(2,'0')+' / 0'+sl.length;
-    const old=document.getElementById('cap');old.outerHTML=capHTML(i);
+    const old=document.getElementById('cap');old.outerHTML=capHTML(i);document.getElementById('capGo').href=slideInfo(SLIDES[i]).href;
     rv([...document.querySelectorAll('#cap > *')],.1,.2)};
   document.getElementById('hPrev').onclick=()=>{show(i-1);restart()};document.getElementById('hNext').onclick=()=>{show(i+1);restart()};
   bars.forEach((b,k)=>b.addEventListener('click',()=>{show(k);restart()}));
@@ -1355,15 +1445,15 @@ function motion(r){
   if(r==='home')rv([...$$('.hero-top .kicker'),...$$('.hero-top h1'),...$$('.hero-top .lead'),...$$('.hero-top .ht-b .btn'),...$$('.slider')],.14,base,9);
   firstView=false;
   $$('.phead .wrap').forEach(w=>rv([...w.children],.12,base));
-  if(spIO)$$('.hero-top h1, .phead h1, .head h2, .made4 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
+  if(spIO)$$('.hero-top h1, .phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
   if(r==='home')fitHero();
   $$('.head').forEach(h=>rv([h],0));
-  ['.bento','.mats3','#rail','.sectors','.ab .txt','.cgrid','.bchips','.pgrid','.pd','.pnav','.cta3 .in','.made4 .mt','.feats3','.mstats','.cmain'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')&&!c.classList.contains('rvimg')),.1)));
+  ['.bento','.mats3','#rail','.sectors','.ab .txt','.cgrid','.bchips','.pgrid','.pd','.pnav','.cta3 .in','.made5 .m5t','.mf','.m5s','.cmain'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')&&!c.classList.contains('rvimg')),.1)));
   rv($$('.rv:not(.rv-on)').filter(e=>!e.style.getPropertyValue('--d')));
   $$('.rvimg').forEach(el=>{if(rvIO)rvIO.observe(el);else el.classList.add('rv-on')});
   if(r==='product')rv($$('#zoom'),0);
   const sio=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){sio.unobserve(e.target);countUp(e.target)}}),{threshold:.6}):null;
-  $$('.mstats b[data-n]').forEach(b=>{if(sio&&!reduce){b.textContent='0';sio.observe(b)}else b.textContent=b.dataset.n});
+  $$('.m5s b[data-n]').forEach(b=>{if(sio&&!reduce){b.textContent='0';sio.observe(b)}else b.textContent=b.dataset.n});
 }
 
 /* ---------- Boot ---------- */
