@@ -1154,6 +1154,12 @@ html[dir=ltr] .stage .slide .im{transform-origin:var(--oxl,var(--ox,50%)) var(--
    ===================================================================================== */
 .rail,.toolbar .chips{overflow-y:hidden;overscroll-behavior-y:auto}
 .rail{padding-top:6px;margin-top:-6px}
+
+/* =====================================================================================
+   v16 — material discs: cut-out products (no background square) kept fully inside the circle
+   ===================================================================================== */
+.mat3 .disc{isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black)}
+.mat3 .disc img{inset:17%;width:66%;height:66%;object-fit:contain}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
