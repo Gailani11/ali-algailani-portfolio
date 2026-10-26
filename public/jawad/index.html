@@ -1622,7 +1622,7 @@ setInterval(status,60000);
    follow each other with a short, regular delay. Only opacity and transform move, so it stays smooth on older phones. */
 const rvIO=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){rvIO.unobserve(e.target);e.target.classList.add('rv-on')}}),{rootMargin:'0px 0px -6% 0px'}):null;
 function rv(els,step=.09,base=0,wrap=6){els.forEach((el,i)=>{if(!el)return;el.classList.add('rv');el.style.setProperty('--d',(base+(i%wrap)*step).toFixed(2)+'s');
-  el.addEventListener('transitionend',function done(ev){if(ev.target!==el||ev.propertyName!=='transform')return;el.removeEventListener('transitionend',done);el.classList.remove('rv','rv-on');el.style.removeProperty('--d')});
+  el.addEventListener('transitionend',function done(ev){if(ev.target!==el||ev.propertyName!=='transform'||!el.classList.contains('rv-on'))return;el.removeEventListener('transitionend',done);el.classList.remove('rv','rv-on');el.style.removeProperty('--d')});
   if(rvIO)rvIO.observe(el);else el.classList.add('rv-on')})}
 const $$=q=>[...app.querySelectorAll(q)];let firstView=true;
 function countUp(b){const n=+b.dataset.n;if(reduce||!n){b.textContent=n;return}const t0=performance.now(),D=2200;
@@ -1643,7 +1643,7 @@ function motion(r){
   if(r==='home')fitHero();
   $$('.head').forEach(h=>rv([h],0));
   ['.bento','.mats3','#rail','.sectors','.ab .txt','.cgrid','.bchips','.pgrid','.pd','.pnav','.cta3 .in','.made5 .m5t','.mf','.m5s','.cmain'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')&&!c.classList.contains('rvimg')),.1)));
-  rv($$('.rv:not(.rv-on)').filter(e=>!e.style.getPropertyValue('--d')));
+  rv($$('.rv:not(.rv-on), .brands, .track').filter(e=>!e.style.getPropertyValue('--d')));
   $$('.rvimg').forEach(el=>{if(rvIO)rvIO.observe(el);else el.classList.add('rv-on')});
   if(r==='product')rv($$('#zoom'),0);
   const sio=('IntersectionObserver' in window)?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){sio.unobserve(e.target);countUp(e.target)}}),{threshold:.6}):null;
