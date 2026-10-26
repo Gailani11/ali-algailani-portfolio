@@ -1065,6 +1065,29 @@ html[lang=ar] .hx-in h1{line-height:1.25;letter-spacing:0}
 @media (min-width:641px) and (max-width:1120px){.hx-in .btn{width:auto}.hcap .pill .sgo{margin-inline-start:auto}.hcap .pill{max-width:none}}
 @media (max-width:640px){.hcap .pill{flex-wrap:wrap;border-radius:20px;padding:14px;gap:12px}.hcap .scap{width:100%}.hcap .pill .sgo{width:100%;justify-content:center;height:44px}}
 @media (max-width:1120px){.hcap .pill .scap b{white-space:normal}}
+
+/* =====================================================================================
+   v9 — per-slide framing on wide screens (products clear of the headline), no word masks on the hero title
+   ===================================================================================== */
+.stage .slide .im{transform-origin:var(--ox,50%) var(--oy,50%);transform:scale(calc(var(--s,1) * 1.035))}
+html[dir=ltr] .stage .slide .im{transform-origin:var(--oxl,var(--ox,50%)) var(--oy,50%)}
+.stage .slide.on .im{transform:scale(var(--s,1))}
+@media (max-width:1120px){.stage .slide .im{--s:1!important}}
+
+/* =====================================================================================
+   v10 — both hero buttons side by side; the corner pill only names the current collection
+   ===================================================================================== */
+.hx-in .hbtns{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+.hx-in .hbtns .btn{margin-top:0}
+.hx-in .hgo{background:rgba(20,16,16,.28);border:1.5px solid rgba(255,255,255,.8);color:#fff}
+@media (hover:hover){.hx-in .hgo:hover{background:#fff;color:var(--ink);border-color:#fff}}
+.hcap .pill{padding:10px 22px;gap:0}
+@media (max-width:640px){.hx-in .hbtns{gap:10px}.hx-in .hbtns .btn{width:100%}.hcap .pill{padding:12px 18px;border-radius:16px}}
+#cap .cin{animation:capIn .7s var(--ease) both}
+@keyframes capIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (max-width:640px){.hcap .scap{min-height:0}}
+/* phones/tablets: the cups photo is shown a little closer too (text sits under the photo there, so it stays centred) */
+@media (max-width:1120px){html[dir] .stage .slide .im[style*="--s:1.5"]{--s:1.38!important;transform-origin:54% 66%}}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
@@ -1125,7 +1148,7 @@ html[lang=ar] .hx-in h1{line-height:1.25;letter-spacing:0}
     <div class="fg">
       <div><img class="fl" src="logo-white.svg" alt="Jawad"><p data-t="aboutP1"></p><div class="soc"><a href="https://api.whatsapp.com/send?phone=966555081276" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></svg></a><a href="Jawad-Catalogue.pdf" target="_blank" rel="noopener" aria-label="Catalog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg></a></div></div>
       <div><h5 data-t="fExplore"></h5><ul><li><a href="#home" data-t="nHome"></a></li><li><a href="#products" data-t="nProducts"></a></li><li><a href="#about" data-t="nAbout"></a></li><li><a href="#contact" data-t="nContact"></a></li></ul></div>
-      <div><h5 data-t="fQuick"></h5><ul><li><a href="Jawad-Catalogue.pdf" target="_blank" rel="noopener" data-t="fCatalog"></a></li><li><a href="#latest" data-t="latest"></a></li><li><a href="#branches" data-t="branchesT"></a></li><li><a href="#contact" data-t="nContact"></a></li></ul></div>
+      <div><h5 data-t="fQuick"></h5><ul><li><a href="Jawad-Catalogue.pdf" target="_blank" rel="noopener" data-t="fCatalog"></a></li><li><a href="#latest" data-t="latest"></a></li><li><a href="#branches" data-t="branchesT"></a></li></ul></div>
       <div><h5 data-t="nContact"></h5><ul><li><a class="fi2" href="#branches"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span data-t="jed"></span></a></li><li><a class="fi2" href="tel:920002480"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg><span class="ltr num">920002480</span></a></li><li><a class="fi2" href="mailto:info@jawad.com.sa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span class="ltr">info@jawad.com.sa</span></a></li><li><a class="fi2" href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span data-t="hoursShort"></span></a></li></ul></div>
     </div>
     <div class="fb"><span data-t="rights"></span><span class="ltr">jawad.com.sa</span></div>
@@ -1168,7 +1191,7 @@ const I=(n,c='')=>`<svg class="i ${c}" viewBox="0 0 24 24" fill="none" stroke="c
 const CATALOG='Jawad-Catalogue.pdf';
 const WA='966555081276';
 const TAGS=[{id:6,ar:'ألمنيوم',en:'Aluminium'},{id:5,ar:'ورق',en:'Paper'},{id:10,ar:'بلاستيك',en:'Plastic'},{id:7,ar:'باغاس',en:'Bagasse'},{id:11,ar:'خشب',en:'Wood'},{id:9,ar:'لداري',en:'LeDari'},{id:8,ar:'كنان',en:'KENAN'}];
-const SLIDES=[{img:'ban3.webp',t:10},{img:'ban1.webp',c:127},{img:'ban4.webp',t:7},{img:'ban2.webp',c:142}];
+const SLIDES=[{img:'ban3.webp',t:10},{img:'ban1.webp',c:127},{img:'ban4.webp',t:7},{img:'ban2.webp',c:142,z:'--s:1.5;--ox:100%;--oxl:0%;--oy:70%'}];
 const FEAT=[[144,[1748,1540,1962]],[146,[1068,1072]],[130,[2053,1131]],[178,[1458,2041]],[131,[1806,1952]]];
 const SECT=[['المطاعم','Restaurants'],['المقاهي','Cafés'],['المخابز','Bakeries'],['التموين','Catering'],['الفنادق','Hotels'],['متاجر الأغذية','Grocery Retailers']];
 /* branches exactly as listed on jawad.com.sa/contact-us (names, types, map points) */
@@ -1288,9 +1311,9 @@ function homeHTML(){
   const tagCount=id=>D.p.filter(p=>p.g.includes(id)).length;
   return `
 <section class="hero8 slider" id="hero">
-  <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="shade"></div></div>
-  <div class="hx"><div class="wrap"><div class="hx-in"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1><p class="lead">${t('heroP')}</p><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a></div></div></div>
-  <div class="hcap"><div class="pill">${capHTML(0)}<a class="sgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a></div></div>
+  <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}"${s.z?` style="${s.z}"`:''} alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="shade"></div></div>
+  <div class="hx"><div class="wrap"><div class="hx-in"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1><p class="lead">${t('heroP')}</p><div class="hbtns"><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a><a class="btn hgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a></div></div></div></div>
+  <div class="hcap"><div class="pill">${capHTML(0)}</div></div>
 </section>
 
 <section class="sec" style="padding-bottom:0"><div class="wrap">
@@ -1348,7 +1371,7 @@ function bindHome(){fitHero();document.fonts&&document.fonts.ready.then(fitHero)
   const show=n=>{if(n===i)return;const prev=sl[i];prev.classList.remove('on');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
     i=(n+sl.length)%sl.length;sl[i].classList.add('on');bars.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});cnt.textContent=String(i+1).padStart(2,'0')+' / 0'+sl.length;
     const old=document.getElementById('cap');old.outerHTML=capHTML(i);document.getElementById('capGo').href=slideInfo(SLIDES[i]).href;
-    rv([...document.querySelectorAll('#cap > *')],.1,.2)};
+    document.querySelectorAll('#cap > *').forEach((e,k)=>{e.style.animationDelay=(.08+k*.08)+'s';e.classList.add('cin')})};
   document.getElementById('hPrev').onclick=()=>{show(i-1);restart()};document.getElementById('hNext').onclick=()=>{show(i+1);restart()};
   bars.forEach((b,k)=>b.addEventListener('click',()=>{show(k);restart()}));
   const restart=()=>{clearInterval(slideTimer);if(!reduce)slideTimer=setInterval(()=>show(i+1),7000)};restart();
@@ -1555,7 +1578,7 @@ function motion(r){
   if(r==='home')rv([...$$('.hx-in > *'),...$$('.hcap .pill')],.14,base,9);
   firstView=false;
   $$('.phead .wrap').forEach(w=>rv([...w.children],.12,base));
-  if(spIO)$$('.hx-in h1, .phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
+  if(spIO)$$('.phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
   if(r==='home')fitHero();
   $$('.head').forEach(h=>rv([h],0));
   ['.bento','.mats3','#rail','.sectors','.ab .txt','.cgrid','.bchips','.pgrid','.pd','.pnav','.cta3 .in','.made5 .m5t','.mf','.m5s','.cmain'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')&&!c.classList.contains('rvimg')),.1)));
