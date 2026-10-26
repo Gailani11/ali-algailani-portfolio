@@ -1148,6 +1148,12 @@ html[dir=ltr] .stage .slide .im{transform-origin:var(--oxl,var(--ox,50%)) var(--
 }
 @media (hover:hover) and (max-width:1120px){.hx-in .hgo:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.hx-in .scap:hover{background:var(--stone-2);border-color:var(--stone-2)}}
 @media (max-width:640px){.hx-in .scap{flex-wrap:wrap;row-gap:2px;border-radius:16px}.hx-in .scap b{white-space:normal}}
+
+/* =====================================================================================
+   v15 — horizontal card rows never scroll vertically: the mouse wheel always moves the page
+   ===================================================================================== */
+.rail,.toolbar .chips{overflow-y:hidden;overscroll-behavior-y:auto}
+.rail{padding-top:6px;margin-top:-6px}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
