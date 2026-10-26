@@ -1013,6 +1013,58 @@ html[dir=rtl] .stage #hPrev{--nx:10px}html[dir=rtl] .stage #hNext{--px:-10px}
   .stage .sctl .sbars i{height:2.5px}
 }
 .stage .sctl .ic:focus-visible{opacity:1;transform:none}
+
+/* =====================================================================================
+   v8 — full-width photo hero: the banner is the first thing a visitor sees, with the headline
+   in white over a soft dark shade (on phones the text sits on a dark panel right under the photo)
+   ===================================================================================== */
+.hero8{position:relative;padding:0;margin:0;background:#161414;border-radius:0;overflow:hidden;display:block;isolation:isolate}
+.hero8 .stage{aspect-ratio:3870/1626;border-radius:0;cursor:pointer}
+.hero8 .shade{position:absolute;inset:0;z-index:3;pointer-events:none;
+  background:linear-gradient(to left,rgba(14,11,11,.84) 0%,rgba(14,11,11,.62) 32%,rgba(14,11,11,.22) 58%,rgba(14,11,11,0) 76%),
+             linear-gradient(to top,rgba(14,11,11,.50) 0%,rgba(14,11,11,0) 28%)}
+html[dir=ltr] .hero8 .shade{background:linear-gradient(to right,rgba(14,11,11,.84) 0%,rgba(14,11,11,.62) 32%,rgba(14,11,11,.22) 58%,rgba(14,11,11,0) 76%),
+             linear-gradient(to top,rgba(14,11,11,.50) 0%,rgba(14,11,11,0) 28%)}
+.hx{position:absolute;inset:0;z-index:4;display:flex;align-items:center;pointer-events:none}
+.hx .wrap{width:100%;padding-inline-start:max(var(--gut),96px)}
+.hx-in{max-width:min(720px,52%);display:grid;justify-items:start;gap:clamp(12px,1.4vw,20px);color:#fff;pointer-events:auto;text-shadow:0 2px 18px rgba(0,0,0,.28)}
+.hx-in .kicker{color:#fff;opacity:.92;gap:10px}
+.hx-in .kicker::before{content:"";width:28px;height:2px;border-radius:2px;background:var(--red);flex:none}
+.hx-in h1{color:#fff;font-size:clamp(34px,4.4vw,72px);font-weight:700;line-height:1.12;letter-spacing:-.01em;margin:0}
+html[lang=ar] .hx-in h1{line-height:1.25;letter-spacing:0}
+.hx-in h1 em{font-style:normal;color:inherit}
+.hx-in .lead{color:rgba(255,255,255,.9);max-width:520px;font-size:clamp(15px,1.2vw,19px)}
+.hx-in .btn{margin-top:6px;height:54px;padding-inline:28px}
+/* the current collection, bottom corner of the photo */
+.hcap{position:absolute;z-index:6;bottom:clamp(16px,2vw,30px);inset-inline-end:max(var(--gut),24px);pointer-events:none}
+.hcap .pill{display:flex;align-items:center;gap:16px;padding:7px;padding-inline-start:20px;border-radius:999px;background:rgba(18,16,16,.58);border:1px solid rgba(255,255,255,.16);pointer-events:auto;max-width:min(460px,42vw)}
+.hcap .scap{display:grid;gap:0;min-width:0;color:#fff}
+.hcap .scap .sk{font-size:11.5px;color:rgba(255,255,255,.65)}
+.hcap .scap b{font-size:15px;font-weight:600;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;min-height:0}
+.hcap .scap .sn{display:none}
+.hcap .sgo{height:40px;padding-inline:16px;font-size:13.5px;flex:none}
+/* progress lines stay bottom-centre; arrows on the sides keep clear of the headline */
+.hero8 .stage .sctl .sbars{bottom:clamp(18px,2.2vw,34px)}
+
+@media (max-width:1280px){.hx-in{max-width:min(600px,54%)}}
+
+/* phones and small tablets: photo whole on top, text on the dark panel under it */
+@media (max-width:1120px){
+  .hero8 .shade{background:linear-gradient(to top,rgba(22,20,20,.9) 0%,rgba(22,20,20,0) 34%)}
+  html[dir=ltr] .hero8 .shade{background:linear-gradient(to top,rgba(22,20,20,.9) 0%,rgba(22,20,20,0) 34%)}
+  .hx{position:static;display:block;background:#161414}
+  .hx .wrap{padding-inline-start:max(var(--gut),env(safe-area-inset-left,0px));padding-block:18px 6px}
+  .hx-in{max-width:none;gap:12px;text-shadow:none}
+  .hx-in h1{font-size:clamp(28px,8vw,36px)}
+  .hx-in .lead{font-size:14.5px}
+  .hx-in .btn{width:100%;height:50px}
+  .hcap{position:static;padding:14px max(var(--gut),env(safe-area-inset-left,0px)) 24px;background:#161414}
+  .hcap .pill{max-width:none;background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12)}
+  .hcap .scap b{font-size:14.5px}
+}
+@media (min-width:641px) and (max-width:1120px){.hx-in .btn{width:auto}.hcap .pill .sgo{margin-inline-start:auto}.hcap .pill{max-width:none}}
+@media (max-width:640px){.hcap .pill{flex-wrap:wrap;border-radius:20px;padding:14px;gap:12px}.hcap .scap{width:100%}.hcap .pill .sgo{width:100%;justify-content:center;height:44px}}
+@media (max-width:1120px){.hcap .pill .scap b{white-space:normal}}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
@@ -1235,18 +1287,11 @@ function capHTML(i){const x=slideInfo(SLIDES[i]);return `<a class="scap" id="cap
 function homeHTML(){
   const tagCount=id=>D.p.filter(p=>p.g.includes(id)).length;
   return `
-<section class="hero"><div class="wrap">
-  <div class="hero-top">
-    <div class="ht-a"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1></div>
-    <div class="ht-b"><p class="lead">${t('heroP')}</p><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a></div>
-  </div>
-  <div class="slider" id="slider">
-    <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
-    <div class="sbar">${capHTML(0)}<a class="sgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a>
-
-    </div>
-  </div>
-</div></section>
+<section class="hero8 slider" id="hero">
+  <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}" alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="shade"></div></div>
+  <div class="hx"><div class="wrap"><div class="hx-in"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1><p class="lead">${t('heroP')}</p><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a></div></div></div>
+  <div class="hcap"><div class="pill">${capHTML(0)}<a class="sgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a></div></div>
+</section>
 
 <section class="sec" style="padding-bottom:0"><div class="wrap">
   <div class="head"><div><span class="kicker">${t('featK')}</span><h2>${t('featT')}</h2></div><a class="btn btn-ghost" href="#products">${t('viewAll')}${ARR}</a></div>
@@ -1507,10 +1552,10 @@ const spIO=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(
 function motion(r){
   /* on the very first visit the hero waits for the logo curtain to lift, so its entrance is actually seen */
   const base=firstView?Math.max(.1,1.75-performance.now()/1000):.35;
-  if(r==='home')rv([...$$('.hero-top .kicker'),...$$('.hero-top h1'),...$$('.hero-top .lead'),...$$('.hero-top .ht-b .btn'),...$$('.slider')],.14,base,9);
+  if(r==='home')rv([...$$('.hx-in > *'),...$$('.hcap .pill')],.14,base,9);
   firstView=false;
   $$('.phead .wrap').forEach(w=>rv([...w.children],.12,base));
-  if(spIO)$$('.hero-top h1, .phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
+  if(spIO)$$('.hx-in h1, .phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
   if(r==='home')fitHero();
   $$('.head').forEach(h=>rv([h],0));
   ['.bento','.mats3','#rail','.sectors','.ab .txt','.cgrid','.bchips','.pgrid','.pd','.pnav','.cta3 .in','.made5 .m5t','.mf','.m5s','.cmain'].forEach(q=>$$(q).forEach(g=>rv([...g.children].filter(c=>!c.style.getPropertyValue('--d')&&!c.classList.contains('rvimg')),.1)));
