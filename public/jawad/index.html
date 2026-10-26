@@ -1088,6 +1088,66 @@ html[dir=ltr] .stage .slide .im{transform-origin:var(--oxl,var(--ox,50%)) var(--
 @media (max-width:640px){.hcap .scap{min-height:0}}
 /* phones/tablets: the cups photo is shown a little closer too (text sits under the photo there, so it stays centred) */
 @media (max-width:1120px){html[dir] .stage .slide .im[style*="--s:1.5"]{--s:1.38!important;transform-origin:54% 66%}}
+
+/* =====================================================================================
+   v11 — one dark colour everywhere, collection label inside the hero text, richer scroll reveals
+   ===================================================================================== */
+.topbar,body::before{background:var(--dark)}
+.hero8,.hx,.hcap{background-color:var(--dark)}
+.hero8 .hx{background-color:transparent}
+@media (max-width:1120px){.hero8 .hx{background-color:var(--dark)}}
+
+/* current collection: a small label right above the two buttons */
+.hx-in .scap{display:inline-flex;align-items:center;gap:10px;max-width:100%;min-height:0;padding:7px 16px;border-radius:999px;background:rgba(20,16,16,.4);border:1px solid rgba(255,255,255,.2);color:#fff;text-shadow:none;margin-top:4px;transition:background .3s,border-color .3s}
+@media (hover:hover){.hx-in .scap:hover{background:rgba(20,16,16,.6);border-color:rgba(255,255,255,.4)}}
+.hx-in .scap .sk{font-size:12.5px;color:rgba(255,255,255,.7);white-space:nowrap;flex:none}
+.hx-in .scap .sk::after{content:"";display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--red);vertical-align:middle;margin-inline-start:10px}
+.hx-in .scap b{font-size:14.5px;font-weight:600;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;min-height:0;-webkit-line-clamp:unset}
+.hx-in .scap .sn{display:none}
+.hx-in .hbtns{margin-top:2px}
+@media (max-width:1120px){.hx-in .scap{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.14)}}
+
+/* scroll reveals for cards and tiles: they rise, settle from a slight zoom-out, and their photo eases in */
+.bento > .rv,.mats3 > .rv,#rail > .rv,.sectors > .rv,.cgrid > .rv,.bchips > .rv,.pgrid > .rv,.m5s > .rv,.mf > .rv,.pnav > .rv{
+  transform:translate3d(0,56px,0) scale(.94);
+  transition:opacity .9s cubic-bezier(.22,.61,.36,1) var(--d,0s),transform 1.25s cubic-bezier(.16,1,.3,1) var(--d,0s)}
+.bento > .rv.rv-on,.mats3 > .rv.rv-on,#rail > .rv.rv-on,.sectors > .rv.rv-on,.cgrid > .rv.rv-on,.bchips > .rv.rv-on,.pgrid > .rv.rv-on,.m5s > .rv.rv-on,.mf > .rv.rv-on,.pnav > .rv.rv-on{transform:none}
+.rv:not(.rv-on) .ph img.ld,.rv:not(.rv-on) .bt-imgs img.ld,.rv:not(.rv-on) .disc img{transform:scale(1.14) translateY(8px)}
+.rv:not(.rv-on) .sector .icw,.rv:not(.rv-on) .icw,.rv:not(.rv-on) .si,.rv:not(.rv-on) .fi{transform:scale(.6) rotate(-12deg)}
+.sector .icw,.cc .icw,.m5s .si,.mf .fi{transition:transform 1s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0s) + .25s),background .4s}
+/* section heads: the small red label draws in */
+.head .kicker{position:relative}
+.rv:not(.rv-on) .kicker,.head.rv:not(.rv-on) .kicker{letter-spacing:.12em}
+.head .kicker{transition:letter-spacing 1.2s cubic-bezier(.16,1,.3,1)}
+@media (prefers-reduced-motion:reduce){.rv:not(.rv-on) *{transform:none!important}}
+.hx-in .scap{grid-area:auto!important;width:auto!important;justify-content:flex-start;flex-wrap:nowrap}
+
+/* =====================================================================================
+   v12 — on laptops and desktops the whole banner (photo, text and buttons) fits in the first screen
+   ===================================================================================== */
+@media (min-width:1121px){
+  .hero8 .stage{aspect-ratio:auto;height:min(calc(100vw * 1626 / 3870),max(460px,calc(100svh - var(--top,125px))))}
+}
+
+/* =====================================================================================
+   v13 — no red rule before the company name; on phones/tablets the text under the photo sits on white
+   ===================================================================================== */
+.hx-in .kicker::before{display:none}
+@media (max-width:1120px){
+  .hero8,.hero8 .hx{background-color:#fff}
+  .hero8 .hx .wrap{padding-block:24px 8px}
+  .hx-in{color:var(--ink)}
+  .hx-in .kicker{color:var(--red);opacity:1}
+  .hx-in h1{color:var(--ink)}
+  .hx-in .lead{color:var(--mute);font-weight:400}
+  .hx-in .hgo{background:#fff;color:var(--ink);border-color:var(--line)}
+  .hx-in .scap{background:var(--stone);border-color:var(--stone);color:var(--ink)}
+  .hx-in .scap .sk{color:var(--mute)}
+  .hx-in .scap b{color:var(--ink)}
+  .hero8{border-bottom:1px solid var(--line)}
+}
+@media (hover:hover) and (max-width:1120px){.hx-in .hgo:hover{background:var(--ink);color:#fff;border-color:var(--ink)}.hx-in .scap:hover{background:var(--stone-2);border-color:var(--stone-2)}}
+@media (max-width:640px){.hx-in .scap{flex-wrap:wrap;row-gap:2px;border-radius:16px}.hx-in .scap b{white-space:normal}}
 </style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
@@ -1312,8 +1372,7 @@ function homeHTML(){
   return `
 <section class="hero8 slider" id="hero">
   <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}"${s.z?` style="${s.z}"`:''} alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="shade"></div></div>
-  <div class="hx"><div class="wrap"><div class="hx-in"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1><p class="lead">${t('heroP')}</p><div class="hbtns"><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a><a class="btn hgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a></div></div></div></div>
-  <div class="hcap"><div class="pill">${capHTML(0)}</div></div>
+  <div class="hx"><div class="wrap"><div class="hx-in"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1><p class="lead">${t('heroP')}</p>${capHTML(0)}<div class="hbtns"><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a><a class="btn hgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a></div></div></div></div>
 </section>
 
 <section class="sec" style="padding-bottom:0"><div class="wrap">
@@ -1365,7 +1424,9 @@ function fitHero(){const h=document.querySelector('.hero-top h1');if(!h)return;
   let f=42;h.style.fontSize=f+'px';r.selectNodeContents(h);while(f>28&&lines()>2){f-=1;h.style.fontSize=f+'px';r.selectNodeContents(h)}
   if(lines()>2)h.style.fontSize='34px'}
 addEventListener('resize',()=>{if(route==='home')fitHero()});
-function bindHome(){fitHero();document.fonts&&document.fonts.ready.then(fitHero);
+function topVar(){if(scrollY>8)return;const tb=document.querySelector('.topbar'),hd=document.getElementById('hd');document.documentElement.style.setProperty('--top',((tb?tb.offsetHeight:0)+(hd?hd.offsetHeight:0))+'px')}
+addEventListener('resize',topVar);
+function bindHome(){topVar();fitHero();document.fonts&&document.fonts.ready.then(fitHero);
   // slider: each photo is scaled so the products are always fully visible; any leftover area shows a soft blur of the same photo
   const sl=[...document.querySelectorAll('.stage .slide')],bars=[...document.querySelectorAll('#bars button')],cnt=document.getElementById('cnt');let i=0;
   const show=n=>{if(n===i)return;const prev=sl[i];prev.classList.remove('on');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
@@ -1575,7 +1636,7 @@ const spIO=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(
 function motion(r){
   /* on the very first visit the hero waits for the logo curtain to lift, so its entrance is actually seen */
   const base=firstView?Math.max(.1,1.75-performance.now()/1000):.35;
-  if(r==='home')rv([...$$('.hx-in > *'),...$$('.hcap .pill')],.14,base,9);
+  if(r==='home')rv([...$$('.hx-in > *')],.14,base,9);
   firstView=false;
   $$('.phead .wrap').forEach(w=>rv([...w.children],.12,base));
   if(spIO)$$('.phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
