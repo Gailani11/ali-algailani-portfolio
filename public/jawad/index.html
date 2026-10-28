@@ -1160,7 +1160,7 @@ html[dir=ltr] .stage .slide .im{transform-origin:var(--oxl,var(--ox,50%)) var(--
    ===================================================================================== */
 .mat3 .disc{isolation:isolate;-webkit-mask-image:-webkit-radial-gradient(white,black)}
 .mat3 .disc img{inset:17%;width:66%;height:66%;object-fit:contain}
-footer [data-t=hoursShort]{white-space:pre-line;line-height:1.7}</style>
+footer [data-t=hoursShort]{white-space:pre-line;line-height:1.7}.stage .slide.z0 .im{transform:scale(calc(var(--s,1) * 1.035))!important;transition:none!important}</style>
 
 <div class="curtain intro" id="curtain" aria-hidden="true"><img src="logo-white.svg" alt=""></div>
 <div class="wipe" id="wipe" aria-hidden="true"><div class="w1"></div><div class="w2"><img src="logo-white.svg" alt=""></div></div>
@@ -1383,7 +1383,7 @@ function homeHTML(){
   const tagCount=id=>D.p.filter(p=>p.g.includes(id)).length;
   return `
 <section class="hero8 slider" id="hero">
-  <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on':''}"><img class="im" src="${s.img}"${s.z?` style="${s.z}"`:''} alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="shade"></div></div>
+  <div class="stage" id="stage">${SLIDES.map((s,i)=>`<div class="slide ${i===0?'on z0':''}"><img class="im" src="${s.img}"${s.z?` style="${s.z}"`:''} alt="${esc(slideInfo(s).title)}"></div>`).join('')}<div class="sctl"><button class="ic" id="hPrev" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M15 6l-6 6 6 6"/></svg></button><span class="counter num ltr" id="cnt">01 / 0${SLIDES.length}</span><div class="sbars" id="bars">${SLIDES.map((s,i)=>`<button aria-label="${i+1}" class="${i===0?'on':''}"><i><b></b></i></button>`).join('')}</div><button class="ic" id="hNext" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></button></div><div class="shade"></div></div>
   <div class="hx"><div class="wrap"><div class="hx-in"><span class="kicker">${t('company')}</span><h1>${t('heroT')}</h1><p class="lead">${t('heroP')}</p>${capHTML(0)}<div class="hbtns"><a class="btn btn-red" href="#products">${I('grid')}${t('browse')}</a><a class="btn hgo" id="capGo" href="${slideInfo(SLIDES[0]).href}">${t('shopThis')}${ARR}</a></div></div></div></div>
 </section>
 
@@ -1441,7 +1441,7 @@ addEventListener('resize',topVar);
 function bindHome(){topVar();fitHero();document.fonts&&document.fonts.ready.then(fitHero);
   // slider: each photo is scaled so the products are always fully visible; any leftover area shows a soft blur of the same photo
   const sl=[...document.querySelectorAll('.stage .slide')],bars=[...document.querySelectorAll('#bars button')],cnt=document.getElementById('cnt');let i=0;
-  const show=n=>{if(n===i)return;const prev=sl[i];prev.classList.remove('on');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
+  const show=n=>{if(n===i)return;sl.forEach(x=>x.classList.remove('z0'));const prev=sl[i];prev.classList.remove('on');prev.classList.add('leaving');setTimeout(()=>prev.classList.remove('leaving'),1400);
     i=(n+sl.length)%sl.length;sl[i].classList.add('on');bars.forEach((b,k)=>{b.classList.toggle('on',k===i);b.classList.toggle('done',k<i)});cnt.textContent=String(i+1).padStart(2,'0')+' / 0'+sl.length;
     const old=document.getElementById('cap');old.outerHTML=capHTML(i);document.getElementById('capGo').href=slideInfo(SLIDES[i]).href;
     document.querySelectorAll('#cap > *').forEach((e,k)=>{e.style.animationDelay=(.08+k*.08)+'s';e.classList.add('cin')})};
@@ -1648,7 +1648,7 @@ const spIO=('IntersectionObserver' in window)&&!reduce?new IntersectionObserver(
 function motion(r){
   /* on the very first visit the hero waits for the logo curtain to lift, so its entrance is actually seen */
   const base=firstView?Math.max(.1,1.75-performance.now()/1000):.35;
-  if(r==='home')rv([...$$('.hx-in > *')],.14,base,9);
+  if(r==='home'){rv([...$$('.hx-in > *')],.14,base,9);const z=document.querySelector('.stage .slide.z0');if(z){z.offsetWidth;setTimeout(()=>z.classList.remove('z0'),base*1000)}}
   firstView=false;
   $$('.phead .wrap').forEach(w=>rv([...w.children],.12,base));
   if(spIO)$$('.phead h1, .head h2, .made5 h2, .cta3 h2, .brp h2').forEach(h=>{splitWords(h);spIO.observe(h)});
