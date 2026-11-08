@@ -34,3 +34,4 @@ publishes each push to `main` automatically (connected 28 Sep 2026).
 | 8 Nov 2026 | New unlisted page `/7bar/` (public/7bar/): unofficial digital-menu concept for 7BAR (Jeddah specialty café) — Arabic, mobile-first, full price list, sticky category tabs, live open/closed status (Riyadh time), and its own link-preview image. Opens from a QR code. `noindex`, not linked from the main site. |
 | 8 Nov 2026 | `/7bar/`: Arabic + English item names, official Saudi riyal sign for prices (SVG from the OFL-licensed Saudi Riyal Font), invented tagline and hours/location footer removed. |
 | 8 Nov 2026 | `/7bar/menu.pdf`: phone-width PDF menu (single continuous page, Arabic + English). The 7BAR table-stand QR now opens this PDF directly. |
+| 8 Nov 2026 | `/7bar/` removed at Ali's request (the 7BAR menu will not be hosted on this site). |
