@@ -175,6 +175,13 @@
       .feed__txt li .card__num { min-width: 26px; }
       .note { margin-top: 8px; padding: 16px 18px; border: 1px solid var(--line-ink); color: var(--mist); font-size: 14px; line-height: 1.8; }
       .gridx { padding-bottom: clamp(56px,8vw,110px); }
+      .files { display:grid; grid-template-columns:1fr; gap:10px; margin-bottom: clamp(28px,4vw,48px); }
+      @media (min-width: 760px){ .files { grid-template-columns: repeat(3,1fr); } }
+      .file { display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:64px; padding: 12px 18px; border:1px solid var(--line-ink); transition: border-color .3s ease, background .3s ease; }
+      .file:hover { border-color: rgba(255,255,255,.5); background: var(--ink-3); }
+      .file__t { font-size:16px; font-weight:400; line-height:1.35; }
+      .file__t .en { display:block; color: var(--graphite); font-size: 11.5px; letter-spacing:.04em; margin-top:2px; }
+      .file__a { font-size:13px; color: var(--mist); border-bottom:1px solid var(--line-ink); padding-bottom:2px; }
     </style>
   </head>
   <body>
@@ -217,7 +224,7 @@
               <li><span class="card__num">03</span><span>محلكم في الصورة: الواجهة، والبار، وشعار الجدار</span></li>
               <li><span class="card__num">04</span><span>تنويع الزوايا: قريب وبعيد، ويد ومكان</span></li>
             </ul>
-            <p class="note">هذه الصور تصورات بالذكاء الاصطناعي لتوضيح الاتجاه البصري. التنفيذ الفعلي يكون بتصوير حقيقي داخل المحل بنفس الإحساس.</p>
+            <p class="note">صور مبدئية مبنية على كوبكم ومحلكم من محتواكم الحالي، لتوضيح الاتجاه البصري. التنفيذ النهائي يكون بتصوير حقيقي داخل المحل بنفس الإحساس.</p>
           </div>
         </div>
       </section>
@@ -284,6 +291,12 @@
 
       <section class="wrap sec" aria-labelledby="s3">
         <div class="sec__h"><h2 id="s3">المنيو<span class="en">The Menu</span></h2><p>ستاند بالباركود على طاولات الجلوس، ومنيو مطبوع عند البار، والاثنين يفتحون نفس المنيو على الجوال.</p></div>
+        <div class="files">
+          <a class="file" href="https://www.dropbox.com/scl/fi/qfnjq0qtppfg2s2e8x3gf/7bar-menu-mobile.pdf?rlkey=3zh0ewnnx1h2dtm5n6q43mfpz&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">منيو الجوال<span class="en">Mobile Menu · PDF</span></span><span class="file__a">فتح</span></a>
+          <a class="file" href="https://www.dropbox.com/scl/fi/975jtt4cg87wdsimuwv12/7bar-table-stand-A5.pdf?rlkey=l3jlju71dgoxwgf4qvn5mrpny&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">ستاند الطاولة<span class="en">Table Stand A5 · PDF</span></span><span class="file__a">فتح</span></a>
+          <a class="file" href="https://www.dropbox.com/scl/fi/eo5wts46njn6nuy8zunfv/7bar-menu-print-A4.pdf?rlkey=43bytbfo9h6d5t083szhq3ijb&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">المنيو المطبوع<span class="en">Printed Menu A4 · PDF</span></span><span class="file__a">فتح</span></a>
+        </div>
+
         <div class="grid gridx">
         <figure class="card">
           <button class="card__btn" type="button" aria-label="تكبير: الباركود على الطاولة">
