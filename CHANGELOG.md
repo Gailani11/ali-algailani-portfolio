@@ -41,3 +41,4 @@ publishes each push to `main` automatically (connected 28 Sep 2026).
 | 10 Nov 2026 | `/7bar/` and `/half-million/`: Arabic words inside letter-spaced caps labels (يشمل، الخطوة الجاية، تواصل، دوري، التفرّغ، مبادرة شخصية) were rendering as broken, disconnected letters on iPhone; they now sit in their own span with no letter-spacing. |
 | 10 Nov 2026 | `/7bar/`: new "The Reels" section — phone mockup of the Reels tab with the six new reel covers (auto-scrolls like the feed), plus a strip of the full covers. |
 | 10 Nov 2026 | `/7bar/`: menu PDF buttons are now white (black on hover) and each sits directly above its scene image — mobile menu over the phone, A5 over the table stand, A4 over the bar. |
+| 10 Nov 2026 | `/7bar/`: Reels section now shows all 12 reels (six new covers for the latest reels), in the account's real order. |
