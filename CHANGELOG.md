@@ -38,3 +38,4 @@ publishes each push to `main` automatically (connected 28 Sep 2026).
 | 10 Nov 2026 | New unlisted page `/7bar/` (public/7bar/): unofficial concept for 7BAR — Instagram feed mockup, 9 photos, QR menu scenes (stand, bar, phone), lightbox, same template as `/half-million/`. `noindex`, not linked from the main site. Menu button opens the Dropbox-hosted PDF. |
 | 10 Nov 2026 | `/7bar/`: open buttons for the three menu PDFs (mobile, A5 stand, A4 print) on Dropbox; softer wording of the concept note. |
 | 10 Nov 2026 | `/7bar/`: entrance and scroll-reveal motion (staggered hero, image wipe-in, section rules drawing in), floating phone with gentle auto-scrolling feed; all disabled under reduced motion. |
+| 10 Nov 2026 | `/7bar/` and `/half-million/`: Arabic words inside letter-spaced caps labels (يشمل، الخطوة الجاية، تواصل، دوري، التفرّغ، مبادرة شخصية) were rendering as broken, disconnected letters on iPhone; they now sit in their own span with no letter-spacing. |
