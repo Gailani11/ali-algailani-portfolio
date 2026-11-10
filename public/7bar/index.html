@@ -2,6 +2,7 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="utf-8" />
+    <script>document.documentElement.classList.add("js")</script>
     <base href="/7bar/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>7BAR — تصور لحساب انستغرام ومنيو | علي الجيلاني</title>
@@ -182,6 +183,26 @@
       .file__t { font-size:16px; font-weight:400; line-height:1.35; }
       .file__t .en { display:block; color: var(--graphite); font-size: 11.5px; letter-spacing:.04em; margin-top:2px; }
       .file__a { font-size:13px; color: var(--mist); border-bottom:1px solid var(--line-ink); padding-bottom:2px; }
+      /* motion */
+      .js .rv { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1.2s var(--ease); transition-delay: var(--d, 0s); }
+      .js .rv.in { opacity: 1; transform: none; }
+      .js .card__btn { clip-path: inset(100% 0 0 0); transition: clip-path 1.2s var(--ease); transition-delay: var(--d, 0s); }
+      .js .card__btn img { transform: scale(1.12); transition: transform 1.6s var(--ease), opacity .6s ease; transition-delay: var(--d, 0s); }
+      .js .card.in .card__btn { clip-path: inset(0 0 0 0); }
+      .js .card.in .card__btn img { transform: scale(1); }
+      .js .card.in .card__btn:hover img { transform: scale(1.025); transition-delay: 0s; }
+      .js .card__cap { opacity: 0; transform: translateY(10px); transition: opacity .9s ease, transform .9s var(--ease); transition-delay: calc(var(--d, 0s) + .35s); }
+      .js .card.in .card__cap { opacity: 1; transform: none; }
+      .js .sec { border-top-color: transparent; }
+      .sec { position: relative; }
+      .js .sec::before { content: ""; position: absolute; top: -1px; inset-inline-start: 0; height: 1px; width: 0; background: var(--line-ink); transition: width 1.4s var(--ease); }
+      .js .sec.in::before { width: 100%; }
+      .phone { animation: float 7s ease-in-out infinite; }
+      @keyframes float { 0%,100% { translate: 0 0; } 50% { translate: 0 -8px; } }
+      @media (prefers-reduced-motion: reduce) {
+        .js .rv, .js .card__btn, .js .card__btn img, .js .card__cap { opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important; }
+        .phone { animation: none; }
+      }
     </style>
   </head>
   <body>
@@ -201,22 +222,22 @@
 
     <main>
       <section class="wrap hero" aria-labelledby="t">
-        <span class="caps">7BAR · Jeddah · 2026</span>
-        <h1 id="t">تصور لحساب <span class="en nw">7BAR</span> ومنيو بالباركود</h1>
-        <div class="hero__body">
+        <span class="caps rv" style="--d:.05s">7BAR · Jeddah · 2026</span>
+        <h1 id="t" class="rv" style="--d:.15s">تصور لحساب <span class="en nw">7BAR</span> ومنيو بالباركود</h1>
+        <div class="hero__body rv" style="--d:.35s">
           <p>اتجاه بصري موحّد لحسابكم على انستغرام: نفس كوبكم ونفس محلكم، بضوء العصرية الدافي. ومعه منيو بهويتكم، يمسحه الزبون من الطاولة ويفتح على جواله مباشرة.</p>
           <p class="en">A unified visual direction for the 7BAR Instagram account — your cup, your café, warm late-afternoon light — plus a branded menu that opens on the customer’s phone from a table QR code.</p>
         </div>
-        <div class="hero__meta caps">
+        <div class="hero__meta caps rv" style="--d:.5s">
           <bdi dir="ltr">09 Photos</bdi><bdi dir="ltr">QR Menu</bdi><bdi dir="ltr">Instagram 4:5</bdi>
         </div>
       </section>
 
       <section class="wrap sec" aria-labelledby="s1">
-        <div class="sec__h"><h2 id="s1">شكل الحساب<span class="en">The Feed</span></h2></div>
+        <div class="sec__h rv"><h2 id="s1">شكل الحساب<span class="en">The Feed</span></h2></div>
         <div class="feed">
-          <div class="phone"><div class="phone__scr"><img src="grid.webp" width="900" height="2349" alt="شكل حساب 7BAR على انستغرام بالصور الجديدة" /></div></div>
-          <div class="feed__txt">
+          <div class="phone rv" style="--d:.1s"><div class="phone__scr"><img src="grid.webp" width="900" height="2349" alt="شكل حساب 7BAR على انستغرام بالصور الجديدة" /></div></div>
+          <div class="feed__txt rv" style="--d:.25s">
             <p>كل الصور بنفس الإحساس، فيصير الحساب كأنه جلسة تصوير وحدة، مو صور متفرقة.</p>
             <ul>
               <li><span class="card__num">01</span><span>ضوء ثابت: شمس العصرية الدافية من الشباك</span></li>
@@ -230,7 +251,7 @@
       </section>
 
       <section class="wrap sec" aria-labelledby="s2">
-        <div class="sec__h"><h2 id="s2">الصور<span class="en">The Photos</span></h2></div>
+        <div class="sec__h rv"><h2 id="s2">الصور<span class="en">The Photos</span></h2></div>
         <div class="grid gridx">
         <figure class="card card--lead">
           <button class="card__btn" type="button" aria-label="تكبير: الواجهة بالليل">
@@ -290,8 +311,8 @@
       </section>
 
       <section class="wrap sec" aria-labelledby="s3">
-        <div class="sec__h"><h2 id="s3">المنيو<span class="en">The Menu</span></h2><p>ستاند بالباركود على طاولات الجلوس، ومنيو مطبوع عند البار، والاثنين يفتحون نفس المنيو على الجوال.</p></div>
-        <div class="files">
+        <div class="sec__h rv"><h2 id="s3">المنيو<span class="en">The Menu</span></h2><p>ستاند بالباركود على طاولات الجلوس، ومنيو مطبوع عند البار، والاثنين يفتحون نفس المنيو على الجوال.</p></div>
+        <div class="files rv">
           <a class="file" href="https://www.dropbox.com/scl/fi/qfnjq0qtppfg2s2e8x3gf/7bar-menu-mobile.pdf?rlkey=3zh0ewnnx1h2dtm5n6q43mfpz&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">منيو الجوال<span class="en">Mobile Menu · PDF</span></span><span class="file__a">فتح</span></a>
           <a class="file" href="https://www.dropbox.com/scl/fi/975jtt4cg87wdsimuwv12/7bar-table-stand-A5.pdf?rlkey=l3jlju71dgoxwgf4qvn5mrpny&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">ستاند الطاولة<span class="en">Table Stand A5 · PDF</span></span><span class="file__a">فتح</span></a>
           <a class="file" href="https://www.dropbox.com/scl/fi/eo5wts46njn6nuy8zunfv/7bar-menu-print-A4.pdf?rlkey=43bytbfo9h6d5t083szhq3ijb&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">المنيو المطبوع<span class="en">Printed Menu A4 · PDF</span></span><span class="file__a">فتح</span></a>
@@ -319,7 +340,7 @@
         </div>
       </section>
 
-      <section class="wrap credits" aria-label="عن العمل">
+      <section class="wrap credits rv" aria-label="عن العمل">
         <div>
           <span class="caps">Included · يشمل</span>
           <ul>
@@ -338,9 +359,9 @@
 
       <section class="contact" aria-labelledby="c">
         <div class="wrap">
-          <span class="caps">Contact · تواصل</span>
-          <h2 id="c">يسعدني أشتغل معكم على حساب 7BAR.</h2>
-          <div class="actions">
+          <span class="caps rv">Contact · تواصل</span>
+          <h2 id="c" class="rv" style="--d:.1s">يسعدني أشتغل معكم على حساب 7BAR.</h2>
+          <div class="actions rv" style="--d:.2s">
             <a class="btn btn--solid" href="https://wa.me/966502351845?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%D8%8C%20%D8%B4%D9%81%D8%AA%20%D8%AA%D8%B5%D9%88%D8%B1%207BAR" target="_blank" rel="noopener">واتساب</a>
             <a class="btn" href="https://www.dropbox.com/scl/fi/qfnjq0qtppfg2s2e8x3gf/7bar-menu-mobile.pdf?rlkey=3zh0ewnnx1h2dtm5n6q43mfpz&amp;raw=1" target="_blank" rel="noopener">افتح المنيو على الجوال</a>
             <a class="btn" href="https://alialgailani.com/">ملف الأعمال الكامل</a>
@@ -398,6 +419,46 @@
           if (e.key === 'ArrowLeft') show(cur + 1);
           if (e.key === 'ArrowRight') show(cur - 1);
         });
+      })();
+    </script>
+    <script>
+      (function () {
+        var root = document.documentElement;
+        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        // stagger cards per row
+        document.querySelectorAll('.grid').forEach(function (g) {
+          Array.prototype.forEach.call(g.querySelectorAll('.card'), function (c, i) { c.style.setProperty('--d', (i % 3) * 0.12 + 's'); });
+        });
+        var els = document.querySelectorAll('.rv, .card, .sec');
+        if (!('IntersectionObserver' in window) || reduce) { els.forEach(function (e) { e.classList.add('in'); }); }
+        else {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+          }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+          els.forEach(function (e) { io.observe(e); });
+          // hero shows on load
+          requestAnimationFrame(function () { document.querySelectorAll('.hero .rv').forEach(function (e) { e.classList.add('in'); }); });
+        }
+        // the phone feed scrolls gently by itself until touched
+        var scr = document.querySelector('.phone__scr');
+        if (scr && !reduce) {
+          var stop = false, dir = 1, t0 = null;
+          ['pointerdown', 'wheel', 'touchstart'].forEach(function (ev) { scr.addEventListener(ev, function () { stop = true; }, { passive: true }); });
+          var vis = false;
+          new IntersectionObserver(function (es) { vis = es[0].isIntersecting; }, { threshold: 0.4 }).observe(scr);
+          (function step(ts) {
+            if (!stop && vis) {
+              if (t0 === null) t0 = ts;
+              if (ts - t0 > 1400) {
+                scr.scrollTop += 0.6 * dir;
+                var max = scr.scrollHeight - scr.clientHeight;
+                if (scr.scrollTop >= max - 1) { dir = -1; t0 = ts + 1200; }
+                else if (scr.scrollTop <= 0 && dir < 0) { dir = 1; t0 = ts + 1200; }
+              }
+            }
+            requestAnimationFrame(step);
+          })(0);
+        }
       })();
     </script>
   </body>
