@@ -184,11 +184,13 @@
       .gridx { padding-bottom: clamp(56px,8vw,110px); }
       .files { display:grid; grid-template-columns:1fr; gap:10px; margin-bottom: clamp(28px,4vw,48px); }
       @media (min-width: 760px){ .files { grid-template-columns: repeat(3,1fr); } }
-      .file { display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:64px; padding: 12px 18px; border:1px solid var(--line-ink); transition: border-color .3s ease, background .3s ease; }
-      .file:hover { border-color: rgba(255,255,255,.5); background: var(--ink-3); }
-      .file__t { font-size:16px; font-weight:400; line-height:1.35; }
-      .file__t .en { display:block; color: var(--graphite); font-size: 11.5px; letter-spacing:.04em; margin-top:2px; }
-      .file__a { font-size:13px; color: var(--mist); border-bottom:1px solid var(--line-ink); padding-bottom:2px; }
+      .file { display:flex; justify-content:space-between; align-items:center; gap:16px; min-height:64px; padding: 12px 18px; background: var(--paper); color: var(--ink); border:1px solid var(--paper); transition: background .3s ease, color .3s ease, border-color .3s ease; }
+      .file:hover, .file:focus-visible { background: #000; color: var(--paper); border-color: rgba(255,255,255,.55); }
+      .file__t { font-size:16px; font-weight:500; line-height:1.35; }
+      .file__t .en { display:block; color: var(--slate); font-size: 11.5px; letter-spacing:.04em; margin-top:2px; font-weight:400; transition: color .3s ease; }
+      .file:hover .file__t .en, .file:focus-visible .file__t .en { color: var(--graphite); }
+      .file__a { font-size:13px; border-bottom:1px solid currentColor; padding-bottom:2px; }
+      .card--menu { align-content: start; }
       /* motion */
       .js .rv { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1.2s var(--ease); transition-delay: var(--d, 0s); }
       .js .rv.in { opacity: 1; transform: none; }
@@ -342,30 +344,27 @@
 
       <section class="wrap sec" aria-labelledby="s3">
         <div class="sec__h rv"><h2 id="s3">المنيو<span class="en">The Menu</span></h2><p>ستاند بالباركود على طاولات الجلوس، ومنيو مطبوع عند البار، والاثنين يفتحون نفس المنيو على الجوال.</p></div>
-        <div class="files rv">
-          <a class="file" href="https://www.dropbox.com/scl/fi/qfnjq0qtppfg2s2e8x3gf/7bar-menu-mobile.pdf?rlkey=3zh0ewnnx1h2dtm5n6q43mfpz&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">منيو الجوال<span class="en">Mobile Menu · PDF</span></span><span class="file__a">فتح</span></a>
-          <a class="file" href="https://www.dropbox.com/scl/fi/975jtt4cg87wdsimuwv12/7bar-table-stand-A5.pdf?rlkey=l3jlju71dgoxwgf4qvn5mrpny&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">ستاند الطاولة<span class="en">Table Stand A5 · PDF</span></span><span class="file__a">فتح</span></a>
-          <a class="file" href="https://www.dropbox.com/scl/fi/eo5wts46njn6nuy8zunfv/7bar-menu-print-A4.pdf?rlkey=43bytbfo9h6d5t083szhq3ijb&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">المنيو المطبوع<span class="en">Printed Menu A4 · PDF</span></span><span class="file__a">فتح</span></a>
-        </div>
-
         <div class="grid gridx">
-        <figure class="card">
-          <button class="card__btn" type="button" aria-label="تكبير: الباركود على الطاولة">
-            <img src="m01.webp" width="1080" height="1350" loading="lazy" alt="الباركود على الطاولة" />
-          </button>
-          <figcaption class="card__cap"><h2>الباركود على الطاولة<span class="en">QR Table Stand</span></h2><span class="card__num">10</span></figcaption>
-        </figure>
-        <figure class="card">
-          <button class="card__btn" type="button" aria-label="تكبير: المنيو عند البار">
-            <img src="m02.webp" width="1080" height="1350" loading="lazy" alt="المنيو عند البار" />
-          </button>
-          <figcaption class="card__cap"><h2>المنيو عند البار<span class="en">Printed Menu at the Bar</span></h2><span class="card__num">11</span></figcaption>
-        </figure>
-        <figure class="card">
+        <figure class="card card--menu">
+          <a class="file" href="https://www.dropbox.com/scl/fi/qfnjq0qtppfg2s2e8x3gf/7bar-menu-mobile.pdf?rlkey=3zh0ewnnx1h2dtm5n6q43mfpz&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">منيو الجوال<span class="en">Mobile Menu · PDF</span></span><span class="file__a">فتح</span></a>
           <button class="card__btn" type="button" aria-label="تكبير: المنيو على الجوال">
             <img src="m03.webp" width="1080" height="1350" loading="lazy" alt="المنيو على الجوال" />
           </button>
-          <figcaption class="card__cap"><h2>المنيو على الجوال<span class="en">The Menu on Your Phone</span></h2><span class="card__num">12</span></figcaption>
+          <figcaption class="card__cap"><h2>المنيو على الجوال<span class="en">The Menu on Your Phone</span></h2><span class="card__num">10</span></figcaption>
+        </figure>
+        <figure class="card card--menu">
+          <a class="file" href="https://www.dropbox.com/scl/fi/975jtt4cg87wdsimuwv12/7bar-table-stand-A5.pdf?rlkey=l3jlju71dgoxwgf4qvn5mrpny&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">ستاند الطاولة<span class="en">Table Stand A5 · PDF</span></span><span class="file__a">فتح</span></a>
+          <button class="card__btn" type="button" aria-label="تكبير: الباركود على الطاولة">
+            <img src="m01.webp" width="1080" height="1350" loading="lazy" alt="الباركود على الطاولة" />
+          </button>
+          <figcaption class="card__cap"><h2>الباركود على الطاولة<span class="en">QR Table Stand</span></h2><span class="card__num">11</span></figcaption>
+        </figure>
+        <figure class="card card--menu">
+          <a class="file" href="https://www.dropbox.com/scl/fi/eo5wts46njn6nuy8zunfv/7bar-menu-print-A4.pdf?rlkey=43bytbfo9h6d5t083szhq3ijb&amp;raw=1" target="_blank" rel="noopener"><span class="file__t">المنيو المطبوع<span class="en">Printed Menu A4 · PDF</span></span><span class="file__a">فتح</span></a>
+          <button class="card__btn" type="button" aria-label="تكبير: المنيو عند البار">
+            <img src="m02.webp" width="1080" height="1350" loading="lazy" alt="المنيو عند البار" />
+          </button>
+          <figcaption class="card__cap"><h2>المنيو عند البار<span class="en">Printed Menu at the Bar</span></h2><span class="card__num">12</span></figcaption>
         </figure>
         </div>
       </section>
