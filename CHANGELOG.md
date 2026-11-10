@@ -39,3 +39,4 @@ publishes each push to `main` automatically (connected 28 Sep 2026).
 | 10 Nov 2026 | `/7bar/`: open buttons for the three menu PDFs (mobile, A5 stand, A4 print) on Dropbox; softer wording of the concept note. |
 | 10 Nov 2026 | `/7bar/`: entrance and scroll-reveal motion (staggered hero, image wipe-in, section rules drawing in), floating phone with gentle auto-scrolling feed; all disabled under reduced motion. |
 | 10 Nov 2026 | `/7bar/` and `/half-million/`: Arabic words inside letter-spaced caps labels (يشمل، الخطوة الجاية، تواصل، دوري، التفرّغ، مبادرة شخصية) were rendering as broken, disconnected letters on iPhone; they now sit in their own span with no letter-spacing. |
+| 10 Nov 2026 | `/7bar/`: new "The Reels" section — phone mockup of the Reels tab with the six new reel covers (auto-scrolls like the feed), plus a strip of the full covers. |

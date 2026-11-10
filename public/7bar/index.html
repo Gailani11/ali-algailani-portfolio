@@ -170,6 +170,11 @@
       .phone { justify-self:center; width: min(100%, 420px); background:#000; border-radius: 44px; padding: 12px; box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 0 0 1.5px rgba(255,255,255,.12); }
       .phone__scr { border-radius: 34px; overflow: hidden; max-height: 760px; overflow-y: auto; scrollbar-width: none; }
       .phone__scr::-webkit-scrollbar{ display:none }
+      .feed--flip .phone { order: 2; }
+      @media (min-width: 900px){ .feed--flip { grid-template-columns: 1.1fr 0.9fr; } }
+      .covers { display:grid; grid-template-columns: repeat(3, 1fr); gap: clamp(8px,1.2vw,16px); padding-bottom: clamp(72px,10vw,140px); }
+      @media (min-width: 900px){ .covers { grid-template-columns: repeat(6, 1fr); } }
+      .covers img { width:100%; aspect-ratio: 9 / 16; object-fit: cover; display:block; border-radius: 10px; background: var(--ink-3); box-shadow: 0 18px 40px rgba(0,0,0,.35); }
       .feed__txt { display:grid; gap: 22px; align-content:start; }
       .feed__txt p { color:#d9d8dc; font-size: clamp(16px,1.4vw,18px); max-width: 44ch; }
       .feed__txt ul { margin:0; padding:0; list-style:none; display:grid; gap:12px; }
@@ -248,6 +253,30 @@
             </ul>
             <p class="note">صور مبدئية مبنية على كوبكم ومحلكم من محتواكم الحالي، لتوضيح الاتجاه البصري. التنفيذ النهائي يكون بتصوير حقيقي داخل المحل بنفس الإحساس.</p>
           </div>
+        </div>
+      </section>
+
+      <section class="wrap sec" aria-labelledby="s1b">
+        <div class="sec__h rv"><h2 id="s1b">الريلز<span class="en">The Reels</span></h2></div>
+        <div class="feed feed--flip">
+          <div class="phone rv" style="--d:.1s"><div class="phone__scr"><img src="reels.webp" width="900" height="2405" loading="lazy" alt="شكل تبويب الريلز في حساب 7BAR بالأغلفة الجديدة" /></div></div>
+          <div class="feed__txt rv" style="--d:.25s">
+            <p>كل ريل له غلاف بنفس ألوان الصور، فيصير تبويب الريلز مرتب مثل الحساب.</p>
+            <ul>
+              <li><span class="card__num">01</span><span>أغلفة الأسماء من ريلزكم نفسها: الكوب والاسم مكتوب عليه</span></li>
+              <li><span class="card__num">02</span><span>نفس الفلتر الدافي اللي في الصور</span></li>
+              <li><span class="card__num">03</span><span>العنوان واضح حتى في جريد البروفايل المقصوص</span></li>
+              <li><span class="card__num">04</span><span>تتركب على الريلز الموجودة بدون ما تنحذف أو تنعاد</span></li>
+            </ul>
+          </div>
+        </div>
+        <div class="covers">
+          <img class="rv" style="--d:0.00s" src="c01.webp" width="540" height="960" loading="lazy" alt="غلاف ريل: محمد" />
+          <img class="rv" style="--d:0.08s" src="c02.webp" width="540" height="960" loading="lazy" alt="غلاف ريل: روان" />
+          <img class="rv" style="--d:0.16s" src="c03.webp" width="540" height="960" loading="lazy" alt="غلاف ريل: ريان" />
+          <img class="rv" style="--d:0.24s" src="c04.webp" width="540" height="960" loading="lazy" alt="غلاف ريل: رورو" />
+          <img class="rv" style="--d:0.32s" src="c05.webp" width="540" height="960" loading="lazy" alt="غلاف ريل: لكل حالة مزاجية" />
+          <img class="rv" style="--d:0.40s" src="c06.webp" width="540" height="960" loading="lazy" alt="غلاف ريل: القهوة المقطرة" />
         </div>
       </section>
 
@@ -441,7 +470,7 @@
           requestAnimationFrame(function () { document.querySelectorAll('.hero .rv').forEach(function (e) { e.classList.add('in'); }); });
         }
         // the phone feed scrolls gently by itself until touched
-        var scr = document.querySelector('.phone__scr');
+        document.querySelectorAll('.phone__scr').forEach(function (scr) {
         if (scr && !reduce) {
           var stop = false, dir = 1, t0 = null;
           ['pointerdown', 'wheel', 'touchstart'].forEach(function (ev) { scr.addEventListener(ev, function () { stop = true; }, { passive: true }); });
@@ -460,6 +489,7 @@
             requestAnimationFrame(step);
           })(0);
         }
+        });
       })();
     </script>
   </body>
